@@ -1,4 +1,4 @@
-# Arborescence commune aux projets Claude Code (11/10/2026, 19h25 — mise à jour 13/10 17h40)
+# Arborescence commune aux projets Claude Code (11/10/2026, 19h25 — mise à jour 13/10 17h40 ; **§7 nomenclature des fichiers et §8 base visuelle usine ajoutés le 21/10 par STRATEGIE**, lots `L-261021-04` / `-05`)
 
 Conventions validées par Alexandre. Référence de toutes les arborescences cibles (BDD, OWL, usine, futurs projets). Rien n'est exécuté sans sauvegarde et manifest validé ; jamais de suppression, on déplace et on trace.
 
@@ -143,3 +143,22 @@ Deux formes coexistent (cf. `0-fonctionnement.md` §14.1.8) : **dans un dépôt*
 **Séparateurs** : `-` entre champs, `_` dans un champ, `+` pour combiner, pas d'espace/accent/apostrophe. **Version d'un livrable** : `_v2`,`_v3` à la fin du détail + `REMPL(...)`.
 
 *(La forme complète sert à ce qui sort du dépôt ; à l'intérieur, la forme courte et les marqueurs texte suffisent. **Confirmé par Alexandre le 21/10 17h13** : « oui pour ce qui voyage — livrables, messages, transferts —, courte dans les dépôts, à mon rythme ». La bascule des noms courts se fait **au fil de l'eau**, jamais en lot dédié.)*
+
+## 8. Base visuelle usine `<n>-<marque>-visuels/` — schéma EXÉCUTÉ (21/10, usine `L-261021-17`)
+
+Gravé d'après `0. IENCLI FACTORY/D-regles/3-statuts-visuels.md` (porté par CREA-ECRITURE, exécuté). **Remplace** la liste des visuels des §5 et §6 ci-dessus. **8 dossiers, aucun sous-dossier** (sauf exceptions fonctionnelles notées) — le **nom du fichier trie par concept**, pas l'arborescence ; les 3 marques portent le même schéma (nvg = squelette vide). Dossier **ignoré par git** (lourd). Tags humains `HUMAIN-<auteur>`.
+
+| dossier | contenu |
+|---|---|
+| `A-valides-plaquette/` | créas validées sur la plaquette, **à plat** |
+| `A-valides-mises-en-page/` | designs du système Claude Code validés |
+| `A-valides-nus/` | nus validés (promus depuis `B-visuels-nus-non-valides/`) |
+| `B-en-attente/` *(ex `B-a-retravailler/`, renommé `L-261021-17`)* | à reprendre, **intouché par CC** ; visuels à la racine ; sous-statuts `a-potentiel/`, `en-attente/` ; reçoit aussi les générations **freestyle/API** sorties de `B-mises-en-page-non-validees/` (tri de provenance) |
+| `B-mises-en-page-non-validees/` | mise en page **TECHNIQUE seulement** (overlay/layout par script, aucun appel modèle), à plat ; sous-dossier fonctionnel `prompts/` ; tout fichier freestyle/généré par l'API part en `B-en-attente/` (`tri_mep_provenance.py`) |
+| `B-visuels-nus-non-valides/` | images générées **nues** (sans mise en page), **à plat** : `situ-<situation>-<concept>-<produit>-<seq>` (+ noms legacy conservés) ; **deux vues de confort en liens durs** (`_nl_`, `nus_liens.py`) : `situation-<x>/` et `brut-<concept>/` |
+| `D-inspiration/` | inspiration / moodboards, à plat (les concurrents sont en `-ressources/analyse-site-et-concurrents/`) |
+| `E-rejetes-conserves/` | non validés gardés, à plat |
+
+\+ `_registre.csv` · `_archives/` (copies datées) · `LISEZMOI.md`.
+**Frontière** : nu (sans mise en page) → `B-visuels-nus-non-valides/` · mise en page technique (script) → `B-mises-en-page-non-validees/` · freestyle/API → `B-en-attente/` · validé → `A-…` · écarté → `E-rejetes-conserves/`.
+**Disparus le 21/10** (contenu redistribué) : `C-designs-non-valides/`, `C-en-cours*/`, `C-bruts-sans-mise-en-page/` (→ `B-…`), `D-elements-pour-fabriquer/` (→ `-ressources/`), `Z-anciens/` (→ `C-backups/` de la marque), `D-inspiration/concurrents/` (→ `-ressources/`). Les anciens attributs `paths` restent en **alias de compat**. La matière de fabrication vit dans la sœur `<n>-<marque>-ressources/` (voir `3-statuts-visuels.md` §2).
