@@ -162,3 +162,29 @@
 - **5. Questions restantes** — —
 
 - **6. Prochaine étape** : **stop jusqu'au message de nuit** (le tirage 17h22 par les projets se fera dans la chaîne de nuit).
+
+---
+
+## L-261021-07 — Nuit : règle verrou/périmètre, veille des chaînes, rapport du matin (STRATEGIE, Claude Code, modèle Opus 4.8)
+- Heures : 21/10, 18h17 → **19h24 (lues)**. MODE AUTONOME, continuité, Alexandre absent. Veille sur disque des voisins, **jamais de `git pull` chez eux**. Commits interleavés (`ac035f7`, `633c1e4`, `76b6bdd`) + ce CR.
+
+- **1. Fait**
+  - **Verrou qui porte le périmètre** gravé §13.5 pt6 (`ac035f7`) : 2e session écrit si périmètre **disjoint et déclaré**, sinon attend ; devlog partagé en ajout ; lève la tension D12/L18. En-tête 18h17 ; les 2 messages de tirage (`B-a-transferer/`) repartent en 18h17.
+  - **Préfixe d'identifiant par dépôt** gravé §14.1 r9 (`633c1e4`) : `L-BDD-/L-USINE-/L-STRAT-`, lots à venir seulement, sans renuméroter — les projets l'ont **adopté dans la nuit**.
+  - **Arbitrages cerveau 21/10 soir** (`76b6bdd`) : verrou = **un fichier, une ligne par session** (session·périmètre) + **pas de branches** gravés §13.5 pt6 ; 7 arbitrages consignés (`decisions-alexandre`) ; « état du dépôt matinal » en récurrente ; pts 6 (contrôle `revue.py` noms non homogènes) et 7 (lots en fichiers) mis en file.
+  - **Veille, 3 passes** (18h18, 18h52, 19h24 ; `plan/taches.md`) : **les trois chaînes surveillées TERMINÉES, 0 🔴** — usine 5/5 + certificat (revue n°6) ; BDD-ECRITURE A–G clos (Lot G revue + clôture) ; BDD-CHICHI-CREA FIN DE CHAÎNE (synthèse pour l'étude de 23h). BDD-DECK-CREA jalon 1/3 (session à part, périmètre disjoint déclaré).
+  - **Rapport du matin** écrit : `rapports/261021-rapport-du-matin.md` (ce qui a tourné · ce qui a cassé · ce qui attend Alexandre · prochain ordre de lancement). `plan/plan-de-route.md` au réel (tâches 2/3/6/8/9 + jalon nuit) ; décisions de la nuit versées en « en attente ».
+
+- **2. Non fait + raison** (recopiés des voisins, non bloquants)
+  - BDD-CHICHI-CREA : M5 bloqué (pas de colonne landing) ; M3/M4/M5 en proxies (débloqués à l'étude de 23h).
+  - Usine : écart A reporté (anciens noms en dur, prod au repos) ; `.claude/agents/` natifs non créés (fallback docs).
+  - Pts 6 et 7 des arbitrages : gravés plus tard (de jour / côté projets).
+
+- **3. Fichiers produits ou modifiés**
+  - `regles/0-fonctionnement.md` (§13.5 pt6 verrou/périmètre/fichier/pas-de-branches, §14.1 r9 préfixe, en-tête) · `decisions/decisions-alexandre.md` (arbitrages + en attente) · `plan/taches.md` (veille 3 passes, récurrente, file) · `plan/plan-de-route.md` (au réel) · 2 messages `B-a-transferer/` (18h17) · `rapports/261021-rapport-du-matin.md` (nouveau) · `devlog.md` (cette entrée).
+
+- **4. À valider par Alexandre** — voir `rapports/261021-rapport-du-matin.md` §3 (décisions prêtes : usine nus/concepts/agent, 8 paires, CAC March, étude Chichi 23h, jeton agence/Coudac, 109 `.py`, dossier Drive, corbeilles).
+
+- **5. Questions restantes** — —
+
+- **6. Prochaine étape** : au réveil d'Alexandre, il tranche les décisions prêtes ; STRATEGIE finit de graver pts 6/7, génère l'état du dépôt du matin, dépose les sources MD Brain, et un re-tirage final de `0-fonctionnement` si besoin. **Stop (fin du lot de nuit).**

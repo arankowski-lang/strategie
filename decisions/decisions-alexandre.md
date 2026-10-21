@@ -41,6 +41,7 @@ Décisions d'Alexandre **antérieures au 14/10**, trouvées dans `1. MD BRAIN/` 
 **Non promues au registre** (déjà en vigueur comme règles, pour éviter le doublon) : fenêtres d'attribution Google 28 j / Meta 7 j sans vue (= **D4**) · assiette unique MER/CAC/NCAC = Online Store seul, CA net, honoraires exclus (= dure BDD **B-R24**) · alignement sur le scénario le plus optimiste (= §7 / §13.4 r8). **Matière projet** (à moissonner par l'architecte du projet, pas ce registre global) : CAC cible March = 202 (BDD) ; règles de rédaction des messages clients (REPORTING/MSG).
 
 ## En attente de décision (file unique — Alexandre répond ici, une ligne par réponse)
+- **Nuit 21/10 — décisions remontées par les chaînes (vue d'ensemble ; voir `rapports/261021-rapport-du-matin.md` §3, chaque décision se prend dans le fichier de son projet)** : usine — mappage des situations des nus legacy · noms des 6 concepts batch-1 · agent `crea-verif` natif · 8 paires de règles · jeton `agence`/8 Coudac ; BDD/Chichi — étude de 23h (cocher `questions_23h` → débloque M3/M4/M5) · CAC March (202 ou 193,13) · CSV d'oracle / Daily-Ads post-14/10 · 109 `.py` de `B-prod-claude/`.
 - Chichi-D3 : marge par catégorie, ou 65 % global ?
 - Chichi-D22 : lecture `MetaSegments`, ou dimension campagne au Moteur v2 ?
 - Tek-D5 : qui relit le mapping de 496 lignes ?
