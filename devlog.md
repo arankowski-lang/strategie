@@ -81,3 +81,33 @@
 - **5. Questions restantes** — —
 
 - **6. Prochaine étape** : une fois les projets alignés, la version commune pourra être « tirée » automatiquement (les `CLAUDE.md` pointent dessus) ; STRATEGIE restera responsable de la version commune et des lignes `[projet]`.
+
+---
+
+## L-261021-04 — Arborescence du dépôt + MD Brain + audit du process (STRATEGIE, Claude Code, modèle Opus 4.8)
+- Heures : 21/10, 13h12 → **16h49 (lues)** ; l'inventaire de `MD Brain` a tourné en sous-agent lecture seule entre-temps. Fenêtre : **estimée** ~60 tours. Trois parties, **un commit par partie**, push en fin de lot.
+- **Accès** : `1. MD BRAIN` déposé par Alexandre à la racine, lu en lecture seule (D11) ; aucun de ses fichiers touché.
+
+- **1. Fait**
+  - **Partie 1 — arborescence** (commit `d2f2428`) : maisons posées — `regles/` (+ `lexique.md` déplacé), `decisions/`, `plan/` (`plan-de-route.md` déplacé + `taches.md` créé), `rapports/`, `B-a-transferer/{bdd,usine}/` (les 2 messages d'alignement y sont passés), `Z-a-supprimer/` (+ `liste.md`). `git mv` partout. `1. MD BRAIN/` ajouté au `.gitignore` (archive à doute d'Alexandre, D11, ses fichiers intacts). `CLAUDE.md` et `README.md` mis à jour.
+  - **Partie 2 — MD Brain** (commit `83e4593`) : inventaire des **41 fichiers** (36 `.md` + 5 `.pdf`) dans `rapports/261021-md-brain-inventaire.md` — **2 à incorporer, 21 déjà couverts, 13 périmés, 5 PDF**. Incorporé : la **nomenclature complète des fichiers** → `regles/arborescence-commune.md` §7 ; la **feuille de route produits** (G1-G9, O1-O11, flux, points critiques, sans dates) → `plan/feuille-de-route-produits.md`. **Moisson** : 6 décisions d'Alexandre antérieures au 14/10, absentes du registre, ajoutées à `decisions/decisions-alexandre.md` (section « Moisson MD Brain », source + validité ; Q24, un client à la fois, NCAC arrondi, « outil fini qu'une fois servi », priorités produits, rétention « une sur dix » périmée). Périmés listés dans `rapports/md-brain-a-supprimer.md` (Alexandre supprime lui-même).
+  - **Partie 3 — audit du process** (commit `fd36eb0`) : gravé dans `regles/0-fonctionnement.md`, **dans les sections existantes** (pas de chapitre parallèle) — (a) verrou `C-pilotage/.ecriture-en-cours` §13.5 pt 6 ; (b) revue de fin de chaîne par sous-agent frais §13.5 pt 7 ; (c) manifeste de déplacement §14.1 r10 ; (d) valeurs de référence par client §14.5 contrôle 11 ; (e) `pieges-connus.md` + `environnement.md` au rituel §9 ; (f) zone verte / zone rouge §13.4 r13 ; (g) D5 rétention reformulée §3 ; (h) identifiant de lot = suivant du devlog, vérifié avant commit §13.4 r14. En-tête à 16h47 + ligne « ce que cette version change ». Les 2 messages `B-a-transferer/` mis à jour (tirage de la version 16h47) ; le message usine dit qu'elle a déjà verrou/pièges/environnement/revue sous-agent/`sauvegarde.py`.
+
+- **2. Non fait + raison**
+  - Les projets ne tirent pas encore la version commune : Alexandre colle les 2 messages (hors périmètre STRATEGIE, lecture seule sur les voisins).
+  - Incorporations marquées « à confirmer » (nomenclature longue, priorités produits) : attendent un oui/non d'Alexandre — la valeur reste consignée en attendant.
+
+- **3. Fichiers produits ou modifiés**
+  - P1 : `CLAUDE.md`, `README.md`, `.gitignore` (maj) ; `regles/lexique.md`, `plan/plan-de-route.md`, `B-a-transferer/{bdd,usine}/…-alignement-regles.md` (déplacés) ; `plan/taches.md`, `Z-a-supprimer/liste.md` (nouveaux).
+  - P2 : `rapports/261021-md-brain-inventaire.md`, `rapports/md-brain-a-supprimer.md`, `plan/feuille-de-route-produits.md` (nouveaux) ; `regles/arborescence-commune.md`, `decisions/decisions-alexandre.md` (maj).
+  - P3 : `regles/0-fonctionnement.md`, les 2 messages `B-a-transferer/` (maj).
+  - `1. MD BRAIN/**` : lu seulement, **non suivi** (gitignore), aucun fichier touché.
+
+- **4. À valider par Alexandre**
+  - Supprimer lui-même les 13 périmés de `MD Brain` (liste `rapports/md-brain-a-supprimer.md`).
+  - Nomenclature longue des fichiers qui voyagent : garder ou non (oui/non, voir inventaire).
+  - Coller les 2 messages d'alignement (`B-a-transferer/`) aux architectes.
+
+- **5. Questions restantes** — —
+
+- **6. Prochaine étape** : alignement des projets (Alexandre colle les messages) ; puis les `CLAUDE.md` des projets pointent sur la version commune ; suivre la file « en attente » et les « à confirmer » de la moisson.
