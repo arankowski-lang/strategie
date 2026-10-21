@@ -142,4 +142,4 @@ Deux formes coexistent (cf. `0-fonctionnement.md` §14.1.8) : **dans un dépôt*
 
 **Séparateurs** : `-` entre champs, `_` dans un champ, `+` pour combiner, pas d'espace/accent/apostrophe. **Version d'un livrable** : `_v2`,`_v3` à la fin du détail + `REMPL(...)`.
 
-*(La forme complète sert à ce qui sort du dépôt ; à l'intérieur, la forme courte et les marqueurs texte suffisent. Statut : **à confirmer** par Alexandre — garder les deux formes ou non, voir `rapports/261021-md-brain-inventaire.md`.)*
+*(La forme complète sert à ce qui sort du dépôt ; à l'intérieur, la forme courte et les marqueurs texte suffisent. **Confirmé par Alexandre le 21/10 17h13** : « oui pour ce qui voyage — livrables, messages, transferts —, courte dans les dépôts, à mon rythme ». La bascule des noms courts se fait **au fil de l'eau**, jamais en lot dédié.)*

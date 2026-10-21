@@ -2,6 +2,8 @@
 lecture/
 # archive à doute déposée par Alexandre (ses entrées, D11) : jamais suivie
 1. MD BRAIN/
+# corbeille des fichiers MD Brain (PDF, binaires) : jamais dans git ; seule Z-a-supprimer/liste.md est suivie
+Z-a-supprimer/md-brain/
 # aucun binaire ici
 *.xlsx
 *.xlsm
