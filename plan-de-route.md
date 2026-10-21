@@ -1,6 +1,6 @@
 # Plan de route — fin de cleaning, entretien, fondations
 
-**statut : actif · mis à jour le 20/10/2026, 22h55 · porté par le cerveau · remplace `plan_cleaning_contexte` (13/10, incorporé).**
+**statut : actif · mis à jour le 21/10/2026 (STRATEGIE coche le prouvé fait, lot `L-261021-02`) · porté par le cerveau · remplace `plan_cleaning_contexte` (13/10, incorporé).**
 **Règle de ce fichier (Alexandre, 20/10 22h20) : ni dates, ni durées, ni assignations.** Il dit l'ordre et les dépendances ; le rythme est celui d'Alexandre (cinq heures par jour sur Claude Code, tous les jours). Seules les dates de faits passés restent. Les règles citées sont gravées dans `CERVEAU-GLOBAL-CC+CN-P-REGLES-fonctionnement.md` (mise à jour 20/10 22h50). Les codes sont expliqués dans `…-CONTEXTE-lexique.md`.
 
 ✅ fait · 🔄 en cours (chaînes de nuit du 20/10) · ⏭ à faire, dans l'ordre · 🆕 décidé le 20/10 soir
@@ -22,23 +22,24 @@ Ce qui a coûté et que les fondations corrigent : six écritures par lot · 600
 - ✅ Contrôles git des deux dépôts (fsck, clone frais identique)
 - ⏸ `faits_graphes` à 15,49 € : avec le prochain reporting Chichi (production, pas socle)
 
-## B — Chaînes de nuit du 20/10 (🔄)
+## B — Chaînes de nuit du 20/10 (✅ terminées — prouvé par les devlogs)
 
-**BDD, dans l'ordre** : 1 finitions + règles (D12 dans les dures, 20 changements non commités tranchés un par un, `.pptx` hors suivi, `liste.md` réconciliée, devlog unique, rituel de démarrage, faits courants, en-têtes de vérité, identifiant de lot, colonnes de mesure) → 2 rapport des emplacements → 3 catalogue reconstruit → 4 table de dettes unique → 5 `revue.py` + `INDEX.md` → 6 garde-fous (trois refus) → 7 chasse aux contradictions → 8 brouillons des trois couches (non activés).
-**Usine, dans l'ordre** : 1 finitions + règles (`build_master`, jetons du scanner, DT-13, D12, devlog, rituel, faits courants, en-têtes) → 2 emplacements (dont `B-maquette`, `B-marches`, `F-references`) → 3 table de dettes unique → 4 état des lieux PIDF → 5 garde-fous → 6 contradictions → 7 brouillons des trois couches.
+**BDD, dans l'ordre** : ✅ chaîne `L-261020-01 … 09` **TERMINÉE** (passation finale au devlog) — 1 finitions + règles (D12 dans les dures, 20 changements non commités tranchés un par un, `.pptx` hors suivi, `liste.md` réconciliée, devlog unique, rituel de démarrage, faits courants, en-têtes de vérité, identifiant de lot, colonnes de mesure) → 2 rapport des emplacements → 3 catalogue reconstruit → 4 table de dettes unique → 5 `revue.py` + `INDEX.md` → 6 garde-fous (trois refus) → 7 chasse aux contradictions → 8 brouillons des trois couches (non activés).
+**Usine, dans l'ordre** : ✅ chaîne `L-261020-01 … 07` **TERMINÉE** (passation finale au devlog) — 1 finitions + règles (`build_master`, jetons du scanner, DT-13, D12, devlog, rituel, faits courants, en-têtes) → 2 emplacements (dont `B-maquette`, `B-marches`, `F-references`) → 3 table de dettes unique → 4 état des lieux PIDF → 5 garde-fous → 6 contradictions → 7 brouillons des trois couches.
+*En plus (prouvé par les devlogs), non prévu ici : arbo « retours Alexandre » du 21/10 exécutée des deux côtés — BDD `L-261021-02` (vérifs OK) ; usine `L-261021-04` (TERMINÉ) + revue n°4 `L-261021-05` (conforme, 0 🔴).*
 
 ## C — Ce qui vient après les chaînes, dans l'ordre
 
-1. ⏭ **Lire les devlogs** (ou le cerveau les lit lui-même, voir E) → **revues des deux chaînes** par les architectes, une passe chacun → reprendre ce qui n'est pas fini, même message.
+1. ✅ **Revues des deux chaînes faites** (prouvé par les devlogs) : BDD **VERIF n°2** (cleaning certifié, 0 🔴) ; usine **revue n°3** (fin de cleaning, 0 🔴) puis **revue n°4** (conforme à l'arbo 21/10, 0 🔴). ⏭ **Reste** : une passe VERIF/revue BDD sur le lot arbo `L-261021-02` (certifié pour le cleaning, pas encore pour l'arbo 21/10) ; reprendre les 🟠 non bloquants.
 2. ⏭ **Copie Drive** (dépôts figés) · corbeille vidée (copies `.git`, brouillons `autonome`) · Deck Master en `zz-`.
 3. ⏭ **`faits-courants.md`** complétés par Alexandre dans les deux projets (ses dates).
 4. ⏭ **Lots de rangement** issus des rapports d'emplacements — règle : deux emplacements permis par sorte de contenu, la maison globale à la racine ou le dossier du client ; le pilotage client = marqueur dans `C-pilotage/` (lecture 1, défaut). Le contrôle entre ensuite dans `revue.py`.
 5. ⏭ **Trier les contradictions** trouvées → règles corrigées.
 6. ⏭ **Brouillons des trois couches** : Alexandre lit, dit oui → bascule du `CLAUDE.md` 40 lignes, des définitions d'agents, des paquets de règles par tâche · `revue.py` copié de BDD à l'usine.
 7. ⏭ 🆕 **Pilote unique : l'usine d'abord** (Alexandre, 22h41) — une fenêtre, sous-agents en séquence ; on mesure (tours, lots, erreurs). **BDD ensuite, avec prudence** : gros, spécificités par client ; tout changement de structure passe par un lot écrit et une revue avant bascule.
-8. ⏭ 🆕 **Dépôt stratégie** : Alexandre crée le dépôt privé vide ; le cerveau y pousse les fichiers globaux ; les `CLAUDE.md` pointent dessus.
-9. ⏭ 🆕 **Les décisions d'Alexandre dans les dépôts** : `decisions-alexandre.md` (global dans stratégie, propre à un projet dans son `C-pilotage/`), verbatim, date, durée de validité ; **backlog de retours à consigner** ; le journal du cerveau y est versé.
-10. ⏭ 🆕 **Le cerveau devient une session Claude Code dans le dépôt stratégie** : il lit les devlogs, tient les fichiers globaux dans un dépôt, pousse lui-même ; la conversation Claude.ai reste le lieu du brainstorm. **Le maximum se fait dans Claude Code ; le cerveau fait le moins possible à terme.**
+8. ✅ 🆕 **Dépôt stratégie créé et en service** : dépôt privé en ligne, fondation poussée par le cerveau (`L-261021-01`), structure complète. ⏭ **Reste** : les `CLAUDE.md` des projets pointent dessus, et `0-fonctionnement.md` des projets alignés sur la version 22h50.
+9. ✅ 🆕 **Les décisions d'Alexandre dans les dépôts** : `decisions-alexandre.md` **en place** dans BDD (`C-pilotage/`), dans l'usine (`C-pilotage/`) et ici (`decisions/`). ⏭ **Reste** : versement du backlog du journal du cerveau et enrichissement verbatim (choix d'Alexandre).
+10. 🔄 🆕 **Le cerveau devient une session Claude Code dans le dépôt stratégie** : **amorcé** — la session STRATEGIE est active, lit les devlogs des projets en lecture seule (`lecture/<projet>/<date>/`) et tient les fichiers globaux ici. ⏭ **Reste** : le cerveau pousse lui-même depuis ce dépôt au lieu de la conversation. **Le maximum se fait dans Claude Code ; le cerveau fait le moins possible à terme.**
 11. ⏭ Les décisions ouvertes, quand Alexandre veut : Chichi-D3 (marge par catégorie ou 65 % global) · Chichi-D22 (`MetaSegments` ou dimension campagne) · Tek-D5 (qui relit les 496 lignes) · decks March v3 / reporting Chichi v13 / DataCAt v5 envoyés ou non · `design/` et `rendus-communs/` · 422 ex-validés Tech · ménage du projet Cerf Veau (oui/non).
 12. ⏭ **Production** : PIDF à l'usine (l'état des lieux dit quoi fournir ; **le premier run = test de fumée réel**, petit jeu, sorties dans `Z-travail/`, avant le vrai run) · plan Chichi des 9 modules côté BDD · `faits_graphes`.
 13. ⏭ 🆕 **Un `CLAUDE.md` par dossier client** ne contenant que les règles de ce client (deuxième emplacement des règles).
