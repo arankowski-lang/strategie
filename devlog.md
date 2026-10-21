@@ -111,3 +111,34 @@
 - **5. Questions restantes** — —
 
 - **6. Prochaine étape** : alignement des projets (Alexandre colle les messages) ; puis les `CLAUDE.md` des projets pointent sur la version commune ; suivre la file « en attente » et les « à confirmer » de la moisson.
+
+---
+
+## L-261021-05 — MD Brain rangé/versé + lecture des projets + schéma visuels usine (STRATEGIE, Claude Code, modèle Opus 4.8)
+- Heures : 21/10, 17h05 → **17h30 (lues)**. Fenêtre : **estimée** ~40 tours. Trois parties, **un commit par partie**, push en fin de lot. Réponses d'Alexandre (17h13) versées en préambule.
+- **Interprétation (signalée, §13.4)** : le lot demandait `git pull` dans les projets, mais pull **écrit** dans leur arbre — ce que les interdits du lot et la règle de lecture seule prohibent. J'ai fait « autrement » (MODE AUTONOME) : **lecture directe sur disque**, aucune écriture chez les voisins.
+
+- **1. Fait**
+  - **Préambule** (commit `9e48083`) : 3 réponses d'Alexandre (21/10 17h13) versées verbatim dans `decisions/decisions-alexandre.md` — nomenclature longue confirmée (« à confirmer » levé en `arborescence-commune.md` §7), MD Brain classable/déplaçable (lève l'interdit D11 de **déplacement pour `1. MD BRAIN/` seulement**, noms/contenu intouchables), identité git = `arankowski`.
+  - **Partie 1 — MD Brain** (commit `9e48083`) : corbeille `Z-a-supprimer/md-brain/` créée et **ignorée par git** (rien de MD Brain dans git) ; `rapports/md-brain-manifeste.md` écrit **avant** tout déplacement (41 lignes, §14.1 r10) ; `1. MD BRAIN/` rangé **sans renommage** en sous-dossiers par destination — `a-verser-bdd/` 11 · `deja-couvert/` 10 · `pdf/` 5 · `a-verser-global/` 0 · `a-verser-usine/` 0 · **corbeille 15** (13 périmés + 2 incorporés en L-261021-04) → `Z-a-supprimer/liste.md`. Versement : global déjà fait (L-261021-04) ; pour BDD, un **message** (`B-a-transferer/bdd/…-sources-md-brain.md`) listant les sources clients disponibles (Chichi, March, RG, messages) + 3 PDF March — **aucune copie brute dans git**, Alexandre dépose. Registre `rapports/md-brain-transferts.md` (quai). Règle **« entrées du cerveau (MD Brain) »** gravée en `0-fonctionnement.md` §14.1 (règle 11), en-tête à 17h22.
+  - **Partie 2 — lecture des projets** (commit `0c23004`) : lu sur disque. **Réel ≠ prémisse du lot** — les **deux projets sont déjà alignés sur la version 16h47** (BDD ; usine `L-261021-18`), **BDD a déjà `pieges-connus.md` et `environnement.md`** (verrou `.ecriture-en-cours` absent, mécanique à confirmer) ; l'usine a tout (chaîne audit `L-261021-08…15`, pilote basculé réversible `L-261021-14`, revue n°5 `L-261021-15`, visuels `L-261021-17`) et un `.ecriture-en-cours` présent (lot en cours). Plan de route tâches **3/7/8** et `taches.md` mis au réel.
+  - **Partie 3 — schéma visuels usine** (commit `389da70`) : gravé **tel qu'exécuté** (lu dans `0. IENCLI FACTORY/D-regles/3-statuts-visuels.md`, `L-261021-17`) dans `arborescence-commune.md` §8 — 8 dossiers, `B-en-attente` (ex `B-a-retravailler`), `B-visuels-nus-non-valides` à plat (`situ-…`) + vues en liens durs, frontière de tri, tags `HUMAIN-`. `0-fonctionnement.md` §14.1 aligné (`B-en-attente`).
+
+- **2. Non fait + raison**
+  - Pas de `git pull` dans les projets (écriture interdite) → lecture directe à la place.
+  - Pas de copie brute de fichiers MD Brain vers les projets (interdit « rien de MD Brain dans git ») → versement par message ; Alexandre porte les fichiers depuis `1. MD BRAIN/a-verser-bdd/` et `pdf/`.
+  - Règle MD Brain (17h22) pas encore tirée par les projets → au prochain alignement.
+
+- **3. Fichiers produits ou modifiés**
+  - `decisions/decisions-alexandre.md`, `regles/arborescence-commune.md` (§7 confirmé + §8 visuels), `regles/0-fonctionnement.md` (§14.1 r11 + en-tête + B-en-attente), `.gitignore`, `Z-a-supprimer/liste.md`, `plan/plan-de-route.md`, `plan/taches.md` (maj).
+  - `rapports/md-brain-manifeste.md`, `rapports/md-brain-transferts.md`, `B-a-transferer/bdd/261021-message-BDD-ARCHITECTE-sources-md-brain.md` (nouveaux).
+  - `1. MD BRAIN/**` : **rangé sur disque** (sous-dossiers, sans renommage), **hors git**. `Z-a-supprimer/md-brain/` : 15 fichiers, **hors git**.
+
+- **4. À valider par Alexandre**
+  - Purger la corbeille `Z-a-supprimer/md-brain/` (15 fichiers, `liste.md`).
+  - Déposer, depuis `1. MD BRAIN/a-verser-bdd/` et `pdf/`, les sources clients qui manquent aux projets (message `B-a-transferer/bdd/`).
+  - Quand il voudra : faire tirer aux projets la règle MD Brain (version 17h22).
+
+- **5. Questions restantes** — —
+
+- **6. Prochaine étape** : marquer « déposé » dans `rapports/md-brain-transferts.md` et vider le quai quand les devlogs projets montrent les dépôts ; écrire le message de tirage 17h22 au moment voulu ; suivre la file « en attente ».
