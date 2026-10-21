@@ -1,0 +1,14 @@
+# copies de travail des projets voisins : jamais suivies
+lecture/
+# aucun binaire ici
+*.xlsx
+*.xlsm
+*.csv
+*.zip
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.pptx
+# verrous LibreOffice
+.~lock*

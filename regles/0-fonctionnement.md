@@ -1,0 +1,308 @@
+# Règles de fonctionnement des projets Claude Code — v3
+
+**Mis à jour le 20/10/2026, 22h50 (v3 écrasée en place — plus de nouveau numéro de version : fichier vivant ; v3 initiale le 18/10, v2 le 13/10, v1 le 13/10). Statut : validé par Alexandre** — décisions des 19 et 20/10 incorporées (clients numérotés, `C-pilotage/` unique, dossiers client, plus d'archive, pas de plafond, heures lues, compte-rendu au journal, D5 copies exactes, régime de contexte étendu, Deck Master fusionné dans BDD, OWL garé, git en ligne). **Porté par** : le cerveau.
+**Ce que la mise à jour de 22h50 change (retours d'Alexandre 22h13–22h41)** : §9 la mesure de fenêtre n'est pas affichée par l'outil → estimée, et **la continuité remplace le stop à 70 %** (§13.5) ; §13.1 le pilote unique commence par l'usine, BDD avec prudence ; §13.3 un code toujours avec son nom en clair ; §13.4 **le cerveau ne donne plus ni dates, ni durées, ni assignations** ; §14.7 **le cerveau devient lui-même une session Claude Code dans le dépôt stratégie**, les décisions d'Alexandre vivent dans les dépôts, le cerveau fait le moins possible à terme. **Ce que la mise à jour de 19h15 changeait (fondations, validées par Alexandre 18h36–19h06)** : §0 et §3 **D12 une seule session écrit à la fois dans un dépôt** ; §3 D8 **toucher un master = le seul feu vert humain** ; §8 messages de lancement courts quand le lot est dans le dépôt ; §9 **règles en trois couches**, **rituel de démarrage**, **mémoire = le dépôt** (sous-agents sans mémoire propre) ; §11–12 état et calendrier au 20/10 soir ; §13.1 **un pilote par projet** (cible) ; §13.5 stop propre à 70 % de fenêtre, LibreOffice hors chemin critique ; §14.1 **en-tête de vérité**, **faits à péremption**, **identifiant de lot**, traçabilité des runs autonomes dans `C-pilotage/`, `Z-travail/` jamais suivi ; §14.3 **le devlog, seule écriture de fin de lot** (plus d'état du jour, SESSIONS une ligne par session) ; §14.5 revue automatisée (`revue.py`), chasse aux contradictions hebdomadaire, garde-fous git (trois blocages, le reste avertit) ; §14.7 dépôt « stratégie » dès maintenant. **Ce que la mise à jour du 20/10 après-midi changeait** : §1 rôles (Deck fusionné, OWL garé) ; §3 D5 (copie exacte supprimable hors D11, pré-tri avant purge) ; §9 régime de contexte validé et étendu, deux gestes de mesure ; §11–12 état et calendrier au 20/10 ; §13.5 pas de plafond, heures lues, réduire seulement si bloqué, stop propre ; §14.1 table des maisons réécrite (clients numérotés, registre des clients, `C-pilotage/` unique, dossiers client et de marque, plus d'archive) ; §14.3 compte-rendu aussi dans le journal. **Ce que la v3 du 18/10 changeait** : §3 D11 (entrées d'Alexandre intouchables) et D5 resserrée ; §7 l'en-tête des documents ne porte plus de REMPL ; §13.2 racine = entrée avec rangement d'entrée à chaque lot ; §13.5 messages de lancement et mode autonome (règle d'Alexandre du 14/10) ; **§14 nouveau : l'entretien** (huit règles d'hygiène, les trois verbes de dépôt, le compte-rendu normé à six blocs, le gabarit de message, la revue d'entretien bimensuelle, la purge mensuelle, le méta-projet). §12 recalé au 18/10. Tout le contenu de la v2 est repris ; rien n'est retiré.
+**Vaut pour** : BDD Master, Deck Master (REPORTING), OWL (VEILLE), usine créa (CREA).
+**Où il vit dans chaque dépôt** : `D-regles/0-fonctionnement.md` — un seul fichier, **sans numéro de version dans le nom**, écrasé en place à chaque mise à jour (l'historique est dans git). L'ancien `B-doc/…fonctionnement_v1.md` est déplacé là par `git mv` puis son contenu remplacé par celui-ci.
+**Fichiers compagnons** (côté cerveau) : `…-REGLES-gabarit_lot.md`, `…-REGLES-arborescence_commune.md`, `…-CONTEXTE-dettes_et_attentes.md`, `…-CONTEXTE-journal_reponses_alexandre.md`, `CERVEAU-GLOBAL-CC+CN-P-CONTEXTE-plan_de_route.md` (le plan de route : fin de cleaning, entretien, fondations — remplace `plan_cleaning_contexte` du 13/10).
+
+---
+
+## 0. En douze lignes
+
+1. Trois niveaux de règles : **dure** (feu rouge), **défaut surveillé** (habitude, dérogation écrite), **défaut** (habitude). Beaucoup moins de dures qu'avant.
+2. Une règle est dure **seulement** si la casser expose à un problème légal, à une perte d'argent certaine et proche, ou à ce qu'un client voie quelque chose de faux ou d'interdit.
+3. Les sessions ne se recontrôlent plus entre elles : **une session VERIF par projet**, en lecture seule, une passe en fin de lot, liste fermée de contrôles.
+4. **Un lot = une demi-journée**, écrit avec le gabarit à 10 cases, deux lots d'avance par session ; la session enchaîne seule si VERIF est vert.
+5. **4 à 5 sessions par projet** pendant la transition ; cible au 31/10 : **une fenêtre par projet (le pilote) et des sous-agents** (§13.1).
+6. **Une seule session écrit à la fois dans un dépôt** (D12, 20/10) ; les autres lisent. Cible : **un pilote par projet** qui lance des sous-agents en séquence (§13.1). Plus de moniteur git.
+7. Recalcul **une fois par lot**, en fin ; comptage d'un classeur par script ; commentaires régénérés seulement si la source change.
+8. Le cerveau écrit les règles globales ; **les architectes écrivent les lots** et tiennent `D-regles/` de leur projet ; le cerveau n'est pas en prod.
+9. **Exhaustivité des passations** : tout ce qu'une session doit savoir est dans son lot. Un oubli de l'architecte se voit parce que la session liste ce qui lui manque avant de commencer.
+10. Tout se consigne : les réponses d'Alexandre dans un journal, les dettes et points en attente dans un fichier, les scripts dans un catalogue.
+11. **On incorpore, on n'ajoute pas** : une information nouvelle sur un sujet qui a déjà son fichier s'écrit dans ce fichier. Un fichier actif par sujet, nommé dans le `CLAUDE.md`. Rien ne se supprime : tout passe par `Z-a-supprimer/`, Alexandre supprime lui-même (§14).
+12. **Tout compte-rendu de session a la même forme** : six blocs, toujours les mêmes, dans le même ordre, **écrit une seule fois, dans le devlog du projet** (§14.3). Une information n'est jamais réécrite à deux endroits.
+
+---
+
+## 1. Rôles
+
+| Qui | Fait | Ne fait pas |
+|---|---|---|
+| **Alexandre** | tranche les décisions métier et les niveaux de règles ; valide par lot (compte-rendu VERIF en trois colonnes, deux minutes) ; déclenche tout envoi externe ; **supprime lui-même** ce qui est dans `Z-a-supprimer/` (purge mensuelle, §14.6) | ne relit pas le travail en cours de lot (sauf s'il le veut) |
+| **Cerveau** (conversation « 0 - Cerf Veau », Claude.ai) | règles globales, process, interactions entre projets, conseils architecture IA ; journal des réponses d'Alexandre ; fichier dettes/attentes ; catalogue global des scripts ; revue hebdomadaire ; tient les fichiers globaux que le méta-projet possédera (§14.7) | **pas en prod** : n'écrit pas les lots des sessions, ne lit pas les réponses des sessions Claude Code (sauf contexte donné par Alexandre) |
+| **Architectes** (`BDD-ARCHITECTE` : session Claude Code dans le dépôt ; usine : conversation Claude.ai « architecte créa » pour le contenu + `CREA-ECRITURE` dans le dépôt pour les règles et le pilotage ; Deck Master fusionné dans BDD, OWL garé) | reçoivent les règles globales ; écrivent les lots (gabarit complet, 2 d'avance) ; tiennent `D-regles/`, `C-pilotage/`, `<N>-<client>/CLAUDE.md` ; journal des consignes ; état du jour ; remontent dettes et questions au cerveau | ne modifient pas les règles globales (ils proposent) ; ne touchent pas aux données, livrables, scripts |
+| **Sessions Claude Code** (4–5 par projet en transition ; cible : le pilote + sous-agents) | exécutent les lots ; **une seule écrit à la fois dans le dépôt** (D12) ; commit avant tout arrêt ; rituel de démarrage (§9) ; **rangement d'entrée** au début de chaque lot (§13.2) ; compte-rendu à six blocs (§14.3) | ne devinent jamais une convention manquante (§9, règle d'ignorance) |
+| **VERIF** (une par projet, Claude Code, lecture seule) | contrôle en fin de lot sur une liste fermée (§6) ; rend le compte-rendu trois colonnes ; **revue d'entretien** toutes les deux semaines (§14.5) ; contrôle la **forme** des comptes-rendus | n'écrit rien dans les données ; ne relit pas « tout pour être sûre » |
+
+---
+
+## 2. Les trois niveaux de règles
+
+**Le test** (appliqué à chaque règle, par Alexandre, à partir d'un inventaire en lecture seule) : casser la règle expose-t-il à **un problème légal**, à **une perte d'argent certaine et proche**, ou à ce qu'**un client voie quelque chose de faux ou d'interdit** ? Si oui → dure. Sinon → défaut.
+
+| Niveau | Ce que fait la session | Où c'est écrit |
+|---|---|---|
+| **Dure** | feu rouge : si la règle ne peut pas être respectée, elle s'arrête et le dit | `D-regles/` section 1, en tête ; chaque session la connaît par cœur |
+| **Défaut surveillé** | habitude suivie par défaut ; elle peut y déroger si la situation le justifie, **à condition d'écrire dans son journal de chantier « dérogé à la règle X parce que… »** | `D-regles/` section 2 |
+| **Défaut** | habitude suivie par défaut, adaptable sans justification (forme, nomenclature, rangement, formats de compte-rendu) | `D-regles/` section 3 |
+
+**Période de surveillance** : du 13/10 au 13/11/2026, toutes les anciennes règles dures « de prudence » (contrôles, recalculs, relectures, vérifications) sont en défaut surveillé. Au 13/11 : une règle jamais dérogée descend en défaut ; une règle dont une dérogation a fait mal remonte en dure. Les dérogations se lisent dans les journaux de chantier.
+
+**Règle de fond** : en cas de doute entre deux niveaux, défaut surveillé. Les vraies règles dures sont peu nombreuses et tiennent sur une page.
+
+**Toute règle porte sa date** (« depuis le », et « surveillée jusqu'au » pour les surveillées) **et son propriétaire** (le projet, ou « globale »). Une règle sans date est à dater à la première revue d'entretien, pas à appliquer aveuglément.
+
+---
+
+## 3. Règles dures globales (tous projets)
+
+Numérotées D1–D12. Chaque projet les recopie en tête de son `D-regles/` et y ajoute ses propres dures (BDD : voir `BDD-261013-GLOBAL-CN-P-REGLES-arbitrage_niveaux_regles.md`).
+
+- **D1 — Rendu client cloisonné.** Un rendu destiné à un client ne contient que les données de ce client, et aucune note interne destinée à Alexandre. La marge, les coûts d'achat et les remarques d'un client **sont visibles dans les rendus de ce client** ; jamais dans ceux d'un autre. La zone privée du consultant (P0) est masquée en copie client.
+- **D2 — Chiffre sourcé.** Aucun chiffre livré sans source nommée : export, fichier, date. Jamais un chiffre « plausible ». Le 7 558 € qui n'existait pas (12/10) est l'exemple à ne pas reproduire.
+- **D3 — Aucun envoi automatique.** Rien ne part vers un client ou une plateforme (mail, message, campagne, publication) sans déclenchement explicite d'Alexandre.
+- **D4 — Fenêtres déclarées, périodes comparables.** Toute comparaison dit sa fenêtre d'attribution et ne compare que des périodes de même longueur ; sinon la session s'arrête et marque 🔎. Valeurs par défaut : Google Ads = **28 jours clic** ; Meta = **7 jours clic, sans vue**. Toute autre fenêtre est écrite explicitement.
+- **D5 — Aucune suppression directe.** Ce qui est à supprimer est **déplacé** dans le dossier `Z-a-supprimer/` **à la racine du projet** (un seul, chemin d'origine conservé à l'intérieur ; plus de `Z-a-supprimer/` locaux), avec une liste jointe `Z-a-supprimer/liste.md` (nom, taille, raison, « remplacé par » le cas échéant, date). **La suppression physique est faite par Alexandre lui-même**, à la purge mensuelle (§14.6), jamais par une session. Exception unique, **18/10** : les copies strictement identiques octet par octet **et de même nom** dans `C-backups/` (rotation) ; l'exception ne s'applique **jamais** aux entrées d'Alexandre (D11), ni à deux fichiers de noms différents (deux fichiers identiques au contenu mais de noms différents ne sont pas des doublons : ils se signalent). La rotation des backups **déplace** dans `Z-a-supprimer/` au lieu de supprimer, et ne touche jamais le socle protégé (3 plus récentes, versions repli/baseline/client/validé, versions citées par un script, master courant ; usine : règle de rétention propre, `D-regles/2-retention-backups.md` ; BDD : socle protégé ci-dessus, pas de fichier de rétention séparé).
+- **D6 — Conformité des chiffres avant livraison.** Rien n'est livré sans le récap de conformité rendu par VERIF (champ · mode de calcul · période · résultat du recalcul). Une ligne ❌ = rien ne part.
+- **D7 — Le travail manuel d'Alexandre est intouchable.** Dès qu'Alexandre a pris copie d'un classeur pour la forme, toute régénération complète est interdite : deltas seulement. Jamais régénérer un graphique qu'il a supprimé ; jamais déplacer un graphique existant. Les mises en forme validées sont des gabarits : on les reproduit à l'identique, on ne les réinterprète pas (contrôle de forme par script, §6).
+- **D8 — Jamais d'écriture sur un master.** Backup = premier appel de toute session ; travail sur copie ; livraison en vN+1 ; jamais écraser ni supprimer une version validée, envoyée à un client ou citée par un script. **Toucher un master est le seul feu vert humain** (20/10) : un lot qui écrit dans un master le dit dans son en-tête et c'est le seul cas où une session attend Alexandre ; tout le reste est autonome, sans demande de feu vert.
+- **D9 — On n'efface jamais une donnée pour la corriger.** On exclut via Réglages ou on retraite avec trace (Suivi, Notice).
+- **D10 — Marque blanche Rouge Gorge.** Jamais le nom du client, ni le nom ou le logo de l'agence, ni le mot « lingerie » ; verbatims jamais rapprochés des chiffres ; toujours nommer le périmètre d'une dépense ; le ROI Easyence est un plancher, jamais « le vrai chiffre ».
+- **D11 — Les entrées d'Alexandre sont intouchables** (règle d'Alexandre, 18/10 ; déclinaison BDD : B-R-EXPORTS). Tout fichier qu'Alexandre dépose — exports (`A-<client>/A-exports/`), briefs, retours client, packshots originaux, plaquettes envoyées — est en lecture seule pour les sessions : jamais supprimé, renommé, modifié ni déplacé par un ménage, une rotation, une purge ou un import. Seule exception : le **rangement initial** depuis la racine vers son dossier, **nom conservé**. Un doublon, un nom douteux (`.csv.csv`, un export Shopify nommé Google), un schéma suspect se **signale** (état du jour, liste à valider) ; Alexandre tranche seul. Les scripts lisent ces fichiers, ils n'écrivent jamais dedans. Déclencheur : 18/10, un export Shopify mal nommé supprimé « en marge d'un import » parce que byte-identique à un autre.
+- **D12 — Une seule session écrit à la fois dans un dépôt** (règle d'Alexandre, 20/10). Toutes les fenêtres d'un projet travaillent dans la même copie de travail et partagent la zone de préparation git : deux sessions qui écrivent en même temps finissent par se commiter l'une l'autre des fichiers à moitié déplacés (20/10 soir : 105 fichiers d'ECRITURE stagés pendant un lot de l'architecte). Donc : l'architecte écrit quand ECRITURE est à l'arrêt, et inversement ; une session en lecture seule peut tourner en parallèle. Cible : un pilote par projet et des sous-agents en séquence (§13.1).
+
+---
+
+## 4. Règles de consommation (les 8 leviers, décidés le 13/10)
+
+| # | Levier | Règle | Niveau |
+|---|---|---|---|
+| 1 | Plus de contre-vérification croisée | Les sessions de travail ne relisent pas le travail des autres. **VERIF** (§6) le fait, une fois par lot. | dure (organisation) |
+| 2 | Plus de moniteur git | Le moniteur toutes les 30 s est retiré. Remplacé par **un seul writer par périmètre** (ECRITURE : données, scripts, `.gitignore`, `CLAUDE.md` racine ; ARCHITECTE : `D-regles/`, `C-pilotage/`, `B-doc/` provisoire, `<N>-<client>/CLAUDE.md`), nommé dans SESSIONS ; les autres sont en lecture seule. | défaut surveillé |
+| 3 | 4–5 sessions par projet, lots longs | Plafond de confort : au-delà de 5, on écrit pourquoi dans la ligne SESSIONS. Les lots sont longs et détaillés (§5) pour que les sessions enchaînent seules et qu'Alexandre vérifie par lot. | défaut surveillé |
+| 4 | Recalcul une fois par lot | Les écritures se font sans recalcul pendant le lot ; **un recalcul en fin de lot**, avant VERIF. Jamais de recalcul pour un déplacement de fichier. Parade : **personne ne lit une valeur calculée avant le recalcul de fin de lot** ; le script de lecture (levier 6) refuse de renvoyer une valeur si un recalcul est en attente et répond « calcul en attente ». Recalcul ciblé = exception, écrite au journal. | défaut surveillé |
+| 5 | Commentaires | Un commentaire (lecture, « à retenir ») n'est régénéré que si **sa source a changé**, si **l'espace est vide**, ou si **Alexandre le demande**. | défaut |
+| 6 | Classeurs lus par script | Une session n'ouvre pas un classeur pour le lire : un script lit et renvoie le résultat (valeurs, comptes, diff). | défaut |
+| 7 | Effort « max » | Réservé au vrai raisonnement (arbitrage, diagnostic). Les déplacements, renommages, lectures, recopies tournent en effort normal. | défaut |
+| 8 | Régime de contexte | La session lit son **minimum vital** (§9) et pas les monolithes. Déployé **sur BDD d'abord, une semaine**, puis étendu après bilan (20/10). | défaut surveillé |
+
+**Mesure** : pas de mesure à vide. La première semaine, chaque session note en fin de lot le pourcentage de fenêtre consommé (affiché, coût zéro). Le cerveau compare après une semaine.
+
+---
+
+## 5. Les lots
+
+- **Durée : une demi-journée** (≈ 4 h de travail de session). Si le lot déborde, la session termine la sous-étape en cours, commit, et écrit ce qui reste dans son compte-rendu ; elle n'entame pas la suite.
+- **Écriture : par l'architecte du projet**, avec le gabarit (`…-REGLES-gabarit_lot.md`, 10 cases obligatoires, « sans objet » explicite si une case ne s'applique pas ; en-tête : lot critique oui/non · writer · **mode autonome oui/non · heure limite** ; case 10 : durée totale **et plafond par étape** ; case 9 : conduite à tenir **par cas bloquant**, une ligne chacun). **Deux lots d'avance** par session.
+- **Case miroir** : avant de commencer, la session liste ce qui lui manque dans le lot (fichiers non nommés, règle citée mais absente, chemin qui n'existe pas). S'il manque quelque chose, elle le dit et attend ou passe au point suivant du lot selon la case 9.
+- **Reformulation** : la session réécrit en **5 lignes** ce qu'elle a compris du lot et ce qu'elle va rendre. C'est la seule chose qu'Alexandre peut lire avant de la laisser partir ; si personne ne répond en 5 minutes, elle part.
+- **Point de mi-lot** (≈ 2 h) : commit + trois lignes dans le journal de chantier (fait / reste / écart par rapport au lot). Elle n'attend personne. Si la case « lot critique » est à oui (rendu qui va chez un client, ou master touché en profondeur), elle **lance VERIF sur ce qu'elle a produit** avant de continuer.
+- **Fin de lot** : commit → recalcul (levier 4) → **compte-rendu à six blocs (§14.3)** → VERIF (§6). Si VERIF est vert et qu'un lot suivant existe : pause de 5 à 20 minutes, puis la session enchaîne. S'il n'y a pas de lot suivant : arrêt propre (commit + compte-rendu), elle ne s'invente pas de travail. Si VERIF est rouge : correction dans le même lot, nouvelle passe VERIF.
+- **Pendant le lot**, aucune question ne bloque : elle va dans `C-taches-en-cours/questions_en_attente.md` du client (ou global), et la session passe au point suivant selon la case 9 du gabarit. Arrêt immédiat seulement pour : master modifié, perte de donnée, règle dure impossible à respecter, contradiction entre deux règles dures. (En mode autonome, §13.5, ces quatre cas s'écrivent mais le reste du lot continue.)
+
+---
+
+## 6. VERIF — définition
+
+- **Une par projet**, Claude Code, **lecture seule**, contexte complet (elle est la seule à lire les monolithes).
+- **Quand** : une passe en fin de chaque lot ; une passe de mi-lot si le lot est marqué critique ; **une revue d'entretien toutes les deux semaines** (§14.5). Pas de veille, pas de passe continue.
+- **Liste fermée de contrôles** (elle ne regarde rien d'autre) :
+  1. **Conformité des chiffres** (D6, obligatoire, en premier) : pour chaque chiffre ou indicateur posé ou modifié dans le lot, une ligne — champ · mode de calcul (formule ou règle, en français) · période · résultat du recalcul par script. Elle recalcule par script, jamais à la main, et compare.
+  2. **Règles dures respectées** (D1–D11 + les dures du projet) : oui/non par règle concernée par le lot.
+  3. **Conformité de forme au gabarit** : par script (portes de forme, comparaison au gabarit validé), pas à l'œil. Les mises en forme recollées doivent être identiques au gabarit.
+  4. **Fichiers livrés** : bon dossier, bon nom (nomenclature en vigueur), rangement d'entrée fait, rien à la racine.
+  5. **Journal de chantier à jour**, dérogations écrites ; **compte-rendu aux six blocs** (§14.3) — un compte-rendu incomplet est renvoyé comme un chiffre sans source.
+  6. **Listes « reste à faire / reste à vérifier »** du compte-rendu reprises et complétées.
+- **Compte-rendu** : trois colonnes — point contrôlé · résultat (✅/❌/⚠) · preuve (fichier, ligne, chiffre). Dix lignes en général. Un ❌ sur les points 1 ou 2 = le lot ne passe pas, rien n'est livré.
+- **Fin de lot = une ligne dans le journal de chantier du client** ; c'est ce signal que VERIF attend (13/10).
+- **Usine créa** : VERIF minimum — points 2, 4 et 5 (pas de recalcul ; ce sont des éditions de dernière étape).
+
+---
+
+## 7. Consignation
+
+- **Une session qui s'arrête commit** son travail. **Commits toujours par pathspec explicite** (`git commit -m "…" -- <fichiers>`), jamais de `git commit` nu : l'index est partagé entre les sessions d'un même dépôt, un commit nu embarque le travail des autres (13/10). `git status --short` avant chaque commit.
+- **Fichiers partagés** (`SESSIONS.md`, journaux de chantier, `Z-a-supprimer/liste.md`, `questions_en_attente.md`) : **en ajout seulement, par Edit, jamais Write** (13/10 : un Write a écrasé le journal d'une autre session).
+- **Tout document porte en tête** : « Mis à jour le <date> », statut (brouillon / à valider / validé), **porté par** (le propriétaire : projet, session ou cerveau). **Plus de REMPL dans l'en-tête ni dans le nom** pour les règles, le contexte et les plans : on incorpore (§14.1). Le REMPL ne subsiste que pour les **livrables** (un deck v6 remplace un deck v5).
+- **Toute décision prise dans un chat** est reportée le jour même dans le fichier concerné (`D-regles/`, journal de chantier, questions en attente).
+- **Journal des réponses d'Alexandre** (tenu par le cerveau) : une entrée = la question en court · **la réponse d'Alexandre collée telle qu'il l'a écrite** · la lecture du cerveau, marquée « à contester ». Les reformulations restent dans le chat ; toute décision est consignée.
+- **Dettes techniques et points en attente** : fichier du cerveau `…-CONTEXTE-dettes_et_attentes.md`, une section par projet ; chaque dette porte **« ouverte le », qui tranche, et « bloque / ne bloque pas »**. Sans date, une dette est à dater à la revue d'entretien.
+- **Catalogue des scripts** : `E-systeme/catalogue-scripts.md` dans chaque projet (une ligne par script : ce qu'il fait, entrée, sortie, chemin) + catalogue global côté cerveau. Avant de coder un outil, la session lit le catalogue ; si l'outil existe ailleurs, elle le demande au cerveau qui le fait transférer. **Les scripts et techniques sont transférables d'un projet à l'autre ; on ne refait pas une tâche récurrente qu'un script couvre déjà.**
+- **Deux scénarios ou deux objectifs qui divergent** dans les fichiers : la session s'aligne sur **le plus optimiste**, sans poser la question, et le note au journal (« deux valeurs trouvées, X et Y, alignée sur X »).
+
+---
+
+## 8. Exhaustivité des passations (règle gravée le 13/10, durcie le 14/10)
+
+Le défaut n°1 du cerveau et des architectes est de **ne pas donner assez de contexte et d'éléments** dans les lots et messages, et d'**oublier des choses**. La règle : **être exhaustif dans toute passation d'informations**, plutôt trop que pas assez — la longueur n'est jamais un problème. Elle est rendue mécanique par le gabarit de lot (10 cases obligatoires) et par la case miroir (la session liste ce qui lui manque). **Avant d'écrire un message de lancement, de passation ou de run autonome** (règle d'Alexandre, 14/10) : relire toute la session en cours et les documents de référence (plan client, référentiel, passation, dettes, fiches), puis tout mettre dans le message — contexte client et réunion, règles de données, inventaire exact des fichiers d'entrée et de leur contenu, chiffres de référence, étapes dans l'ordre avec un temps plafond, règles de livraison et de dépôt, conduite à tenir pour chaque cas qui bloque. Un message à une session déjà au travail commence toujours par « Complément, ne t'interromps pas, termine d'abord ». **Révision du 20/10 soir (Alexandre)** : quand le lot existe déjà dans `C-pilotage/` au gabarit 10 cases, le message de lancement est **court** — « exécute `<lot>`, MODE AUTONOME, décisions nouvelles : 1… 2… 3…, interdits habituels » — parce que le lot écrit garantit l'exhaustivité mieux qu'un message qui le répète. Le message long reste la règle pour un lot qui n'existe pas encore en fichier, pour une session neuve, et pour tout ce que le lot ne contient pas (décisions prises depuis, état du monde).
+
+---
+
+## 9. Régime de contexte (levier 8) — BDD d'abord
+
+- **Minimum vital** lu par une session de travail en début de lot : `D-regles/` (trois sections, une page de dures en tête, `0-fonctionnement.md`) · sa fiche de lot · le journal des consignes du client concerné · sa ligne SESSIONS ou un en-tête court · le catalogue des scripts. **Pas** les monolithes (CLAUDE.md complet archivé, PROTOCOLES, ETAT, vision, méthode) : nommés dans la case 2 du lot, lus à la demande, **chaque ouverture notée au journal** (dérogation).
+- **Règle d'ignorance** : si une information manque pour agir, la session **ne devine pas** ; elle cherche dans le monolithe nommé dans son lot ; si elle ne trouve pas, elle pose la question (questions en attente) et passe au point suivant.
+- **Déploiement** : BDD Master du 13/10 au 20/10 ; bilan du 19/10 : **le régime tient** (aucune erreur attribuable à un contexte manquant) → **étendu à l'usine** avec deux gestes de mesure, obligatoires partout : **(a) chaque ouverture d'un monolithe est notée au journal de chantier** (fichier, raison) ; **(b) chaque fin de lot note la fenêtre consommée** — l'outil n'affiche pas de pourcentage (constaté le 20/10) : la session donne une mesure lue (nombre de tours depuis l'ouverture, nombre de lots enchaînés) et écrit « estimé ». Le seuil chiffré viendra des mesures, pas d'une supposition. Le cerveau relit les deux à la revue hebdo.
+- **Le journal des consignes se condense chaque vendredi** (architecte) : les réponses devenues règles montent dans `D-regles/`, les réponses ponctuelles périmées descendent en archive.
+- **Règles en trois couches (cible, décidée le 20/10 soir, en place pour le 31/10)** : (1) **`CLAUDE.md`, 40 lignes, toujours lu** — qui écrit où, D1–D12 en une ligne chacune, commits par pathspec, mode autonome, compte-rendu au devlog, une session à la fois, règle d'ignorance ; (2) **`D-regles/` complet, lu à la demande** — le registre, les niveaux, les dates, les propriétaires, ouvert quand une règle est citée dans un lot, jamais au démarrage ; (3) **des paquets de règles par tâche** (chargés quand la tâche correspond : clôture de lot, revue d'entretien, génération de visuels, construction de deck, pipeline classeurs, démarrage de session) — une session qui fait un deck charge les règles deck, pas les règles visuels. Tout ce qui concerne le cerveau et Alexandre (façon de se parler, dépôt des fichiers, calendrier, état des projets) **sort des dépôts** vers le cerveau. Cible chiffrée : **une douzaine de règles dures par projet, pas plus** ; tout le reste est un défaut dont une session peut s'écarter si elle le dit dans son compte-rendu. La fin de surveillance du 13/11 sert à retirer des règles, pas à en ajouter.
+- **Rituel de démarrage (priorité forte, Alexandre 20/10)** : avant tout travail, une session affiche en trois lignes **quel plan ou lot elle exécute et son statut (en-tête de vérité, §14.1), la dernière entrée du devlog, et la version des règles qu'elle a lue** ; puis les faits courants (§14.1). Une session sur un vieux plan se voit à la première ligne, pas au compte-rendu.
+- **La mémoire, c'est le dépôt.** Un sous-agent démarre toujours avec un contexte vierge ; il ne garde pas de mémoire d'une exécution à l'autre, et c'est voulu : un agent qui a vécu traîne du périmé (la présentation « encore à venir », la v1 des règles) et relit sa vie à chaque fois. Ce qui persiste : **sa définition** (un fichier par rôle : qui il est, ce qu'il lit, ce qu'il n'a pas le droit de faire), le `CLAUDE.md`, le devlog, les règles par tâche. Un agent qui apprend quelque chose l'écrit dans l'un de ces endroits avant de finir. Un sous-agent n'est repris dans la même session que pour une suite immédiate (débogage en plusieurs temps) — exception, pas modèle. Au démarrage, une session lit **les vingt dernières entrées** du devlog, jamais le fichier entier.
+
+---
+
+## 10. Règles mortes et sédiments
+
+L'architecte retire les règles qui citent un fichier, dossier, session ou script disparu, les règles annulées par une règle plus récente, et les notes caduques. L'intention vit, le chemin est réécrit. Une règle n'est **jamais supprimée par une session** : elle est proposée « obsolète » ou « doublon de » dans la section `## Z — proposées à la suppression (en attente d'Alexandre)` de son fichier, et reste active jusqu'au oui d'Alexandre (passe règles du 19/10, puis revue d'entretien §14.5).
+
+---
+
+## 11. Déploiement par projet (état au 20/10)
+
+**Deux projets actifs** : BDD Master (prototype, le plus complexe) et l'usine créa. Tailles sur disque après cleaning (20/10) : BDD ≈ 20 → 3,8 Go ; usine 28 → 19 Go (photos à retirer à la main par Alexandre). **Deck Master est fusionné dans BDD** (décision du 20/10 : les decks se font à partir des chiffres de la base — scripts de deck → `E-systeme/deck/`, chartes → `D-regles/`, decks livrés → sœurs `-livrable/` ; l'ancien dépôt n'est plus touché après la migration, ses sessions passent en `zz-`). **OWL est garé** (projet secondaire, repris quand il sera viable ; ses 7 conflits de règles sont dans son dépôt, `B-a-transferer/VEILLE-261013-GLOBAL-CC-P-ANALYSE-inventaire_regles_niveaux.md`).
+
+| Projet | Fait (20/10) | Reste |
+|---|---|---|
+| **BDD Master** | D1–D12, règles datées, arborescence à plat (clients numérotés, `C-pilotage/` unique, dossiers client), chemins morts à zéro, régime de contexte validé, **git réécrit (3,2 Gio → 192 Mio), en ligne, contrôlé sain le 20/10 soir (fsck, clone frais identique)**, `B-doc/` **vidé et supprimé** (93 scripts dans `E-systeme/`), table des 13 dettes bloquantes, étude de `Z-a-supprimer/` faite, lots migration Deck et TEXT-€ écrits | migration Deck Master (lot prêt, session ECRITURE neuve) ; TEXT-€ ; `Z-archive/` ; VERIF n°2 ; 3 décisions d'Alexandre (Chichi-D3, Chichi-D22, Tek-D5) |
+| **Usine créa (CREA)** | D1–D12 + R38 dure, registre R1–R50, arborescence numérotée, base visuelle restructurée, `C-pilotage/` unique, plus d'archive, **git réécrit (79 → 8,6 Mo) et en ligne**, purge faite, **batch 3 exécuté** (96 scripts via `paths.py`, `ranger_visuels` sur le nouveau schéma, gabarit lit le registre, dette U10 soldée) | contrôle git + revue du batch 3 par CREA-ARCHITECTE (créée le 20/10) ; 8 scripts « à confirmer » ; production PIDF = premier vrai test avec données |
+
+---
+
+## 12. Ordre des travaux (plus de calendrier — règle d'Alexandre du 20/10 : ni dates, ni durées)
+
+L'ordre et les dépendances sont dans `CERVEAU-GLOBAL-CC+CN-P-CONTEXTE-plan_de_route.md` ; les rituels gardent leur périodicité (push en fin de lot · condensation hebdomadaire des consignes · revue hebdo du cerveau avec chasse aux contradictions · revue d'entretien toutes les deux semaines et après tout run autonome, sessions à l'arrêt · pré-tri puis purge mensuelle par Alexandre · fin de surveillance des règles le 13/11, seule date gardée parce qu'elle a été fixée le 13/10). Le rythme est celui d'Alexandre.
+
+---
+
+## 13. Règles de travail avec les agents
+
+### 13.1 Les deux sortes de fenêtres
+- **Sessions Claude Code** (dans les dossiers d'Alexandre : `BDD-ECRITURE`, `BDD-VERIF`, `BDD-ARCHITECTE`, `BDD-CHICHI`…, `DECK-…`, `CREA-…`, `VEILLE-…`). Elles lisent et écrivent les fichiers du dépôt. On leur colle un texte ; les fichiers, elles les trouvent elles-mêmes.
+- **Conversations Claude.ai** (le cerveau « 0 - Cerf Veau », la session messages clients, l'architecte créa). Elles ne voient pas les dossiers : on leur colle un texte **et on joint les fichiers**.
+- Toujours dire **laquelle** : « Fenêtre : BDD-ARCHITECTE (Claude Code) » / « Fenêtre : conversation Claude.ai architecte créa ».
+- **Cible (décidée le 20/10 soir, en place pour le 31/10) : un pilote par projet.** Une fenêtre Claude Code ne peut pas écrire à une autre fenêtre ; ce qu'elle sait faire, c'est lancer des sous-agents. Donc : **une seule fenêtre par projet, le pilote** (l'architecte), qui écrit le lot, le montre, et sur le « go » d'Alexandre **lance lui-même l'exécution** en sous-agent (un ECRITURE jetable à contexte vierge, qui lit `CLAUDE.md`, le lot et les règles de sa tâche, et rend son compte-rendu au devlog) ou directement si c'est court. Alexandre n'a plus que deux interlocuteurs par projet : le cerveau et le pilote. Les fenêtres ECRITURE, VERIF, DECK disparaissent. Le pilote vit longtemps, donc il fait un stop propre plus souvent (§13.5) ; le travail lourd se fait dans des sous-agents qui meurent après. C'est aussi ce qui réalise D12 : pilote et sous-agents travaillent en séquence. **Ordre de bascule (Alexandre, 20/10 22h41) : l'usine d'abord** — une marque active, structure simple ; on mesure (tours, lots, erreurs) ; **BDD ensuite, avec prudence** : BDD est gros, chaque client a ses spécificités, et tout changement de structure qui touche la base passe par un lot écrit par l'architecte et une revue avant bascule — jamais un changement d'organisation appliqué à BDD parce qu'il a marché à l'usine.
+
+### 13.2 Comment on passe un fichier
+- **Racine du projet = entrée.** Alexandre dépose **toujours** à la racine. **Rangement d'entrée** : au début de **chaque lot**, la session liste ce qui est à la racine, range selon la nomenclature et la table des maisons (§14.1), applique le verbe de dépôt (§14.2), met les pointeurs à jour, et le note dans le bloc « Fichiers » de son compte-rendu. Un fichier dont le nom ne dit pas où il va : `C-pilotage/` avec marqueur `GLOBAL-` + ligne « emplacement à confirmer ». Un fichier qui traîne à la racine plus d'un jour = ligne « bloqué » dans l'état du jour.
+- **`B-a-transferer/` = sortie** : tout ce qu'une session rend à Alexandre, et rien ailleurs.
+- Le « + » du champ outil peut sauter au dépôt (`CCCN`) : la session le rétablit par `git mv`. Les fichiers à l'ancienne nomenclature sont **renommés quand on les touche**, jamais en masse (sauf les `.md` du périmètre architecte lors d'un run de ménage suivi d'une chasse aux chemins morts).
+- Dans le dépôt, les sessions se passent les lots et les comptes-rendus **par les fichiers** (`C-pilotage/`, journaux de chantier, `SESSIONS.md`) ; Alexandre ne recopie plus rien entre deux sessions d'un même projet. Il lui reste **une ligne par lancement** (« ton lot est prêt, chemin dans l'état du jour »).
+
+### 13.3 Comment on écrit un message à un agent
+- **Une liste numérotée, une fenêtre par étape**, et pour chaque étape : la fenêtre, **le texte complet à coller** (jamais « voir plus haut », jamais « ajoute au message précédent »), les fichiers à joindre nommés, et « à quoi ça sert » en une ligne.
+- **Le texte à coller est toujours dans le chat.** Un fichier en plus seulement quand la session doit le garder (brief de prise de poste, lot au gabarit → `C-pilotage/`). Un complément ou une relance = chat seul.
+- **Gabarit de message** (§14.4) : en-tête d'une ligne, étapes numérotées, livrables attendus nommés.
+- **Un message est long et complet** : il porte le contexte, pas la mémoire de la session d'en face. Un message court est une erreur (§8).
+- Les codes (D12, R17, U10, §14.3…) sont **toujours accompagnés de leur nom en clair** — « D12 — une seule session écrit à la fois » — et, pour une règle qu'Alexandre n'a pas sous les yeux, de deux puces : ce qu'elle fait, pourquoi elle existe. Un code seul n'est pas une consigne (fautes du cerveau des 13/10 et 20/10). Le lexique `CERVEAU-GLOBAL-CC+CN-P-CONTEXTE-lexique.md` donne tous les codes en une page.
+- **Toute réponse du cerveau (ou d'un architecte) qui produit un fichier ou un message se termine par une section à part, toujours la même, titrée « Fichiers et messages »** : pour chaque fichier — nom exact · où Alexandre le met (quel dossier, quelle racine) · ce qu'il en fait ensuite (rien / coller tel message) ; pour chaque message — fenêtre · le texte complet à coller. Jamais un fichier livré sans cette section, jamais un message hors du chat (fautes du cerveau des 13/10 et 18/10).
+
+### 13.4 Règles de collaboration avec Alexandre (valables pour tous les agents)
+1. Répondre d'abord à ce qu'il demande, exactement ; signaler une erreur si on en voit une ; proposer mieux **en complément**, jamais à la place.
+2. Garder **ses mots exacts** quand il renvoie un texte retravaillé ou validé ; ne modifier que ce qu'il demande.
+3. Distinguer **« dit » et « déduit »** dans tout ce qui reprend ses consignes ; signaler les ambiguïtés de dictée (« TDH » = Téléachat, « PIA » = pays, « Castelnuovo » = Castelnango, « guides » = git…) avec le choix retenu, plutôt que deviner en silence.
+4. Ne pas inventer une deadline, un nom, une information client, un chiffre : le signaler comme manquant (🔎).
+5. Parler simplement, peu technique, proposer des choix ; « comme à un enfant de 7 ans » pour les sujets techniques ; challenger quand il le demande.
+6. **Brainstormer dans le chat, faire valider, puis seulement écrire le document.**
+7. Chaque correction devient une règle ; ses réponses vont dans le journal (verbatim) le jour même.
+8. Tranche par défaut, il garde le veto : pour le réversible, décider et avancer ; faire valider seulement l'irréversible et le structurant. Deux scénarios divergents → le plus optimiste, noté.
+9. Chaque compte-rendu de session commence par « Session : NOM » puis suit les six blocs (§14.3). Un message collé par Alexandre dans une session = sa parole, quel qu'en soit le rédacteur.
+10. Ne pas lui redemander ce qu'il a déjà tranché ; ne pas le solliciter pendant un lot — les questions vont dans la liste à valider, il y répond quand il veut.
+11. **Le cerveau ne donne ni dates, ni durées, ni assignations** (Alexandre, 20/10 22h20) : les estimations étaient fausses, le réel va deux à trois fois plus vite. Un plan dit l'**ordre et les dépendances** (ceci avant cela, parce que) ; le rythme est celui d'Alexandre — cinq heures par jour sur Claude Code, tous les jours, depuis 90 jours. Les dates de faits passés restent (« fait le 20/10 »).
+12. **Le maximum se fait dans Claude Code, le cerveau fait le moins possible à terme** (Alexandre, 20/10 22h41) : tout ce qu'une session peut lire dans le dépôt n'a pas à passer par le cerveau ; les décisions d'Alexandre vivent dans les dépôts (§14.7) ; le cerveau lit les devlogs lui-même dès que le dépôt stratégie le permet, et ne reste le relais que des « go ».
+
+### 13.5 Mode autonome (règle d'Alexandre, 14/10)
+Une session en **MODE AUTONOME** (en-tête du lot ou du message : « MODE AUTONOME ») **ne s'arrête jamais**, même sur un point bloquant : elle essaie autrement, sinon réduit le périmètre, sinon passe à l'étape ou à l'étude suivante en notant « non fait + raison », et **livre ce qu'elle a**, compte-rendu à six blocs compris. Les seuls interdits absolus : supprimer un master ou une sauvegarde ; `git reset` / `amend` / force-push (sauf l'opération de réécriture d'historique explicitement ordonnée par Alexandre, une fois, avec copie de `.git` faite avant par la session) ; écrire dans les fichiers d'une autre session ; et (lecture du cerveau, 14/10) faire sortir quoi que ce soit du dépôt vers un client ou une plateforme (D3). Le mode autonome **ne lève aucune règle dure** : une suppression reste un déplacement vers `Z-a-supprimer/` (D5), une entrée d'Alexandre reste intouchable (D11) — ce sont des « autres manières », pas des arrêts.
+
+**Précisions des 19 et 20/10 (Alexandre).** (1) **Réduire le périmètre est une réponse à un blocage, jamais un moyen d'aller plus vite** : une étape de fond (lecture, annotation, fusion) expédiée avec un périmètre réduit est un signal d'alarme, la session la reprend en entier (run BDD du 19/10 : 19 minutes pour 8 heures prévues). (2) **Pas de plafond de temps** sur les lots ni sur les étapes (20/10) : une étape dure ce qu'elle doit ; les **heures de début et de fin sont lues sur l'horloge (`date`) et écrites au journal, jamais estimées** (audit usine du 20/10 : heures inventées, corrigées). (3) Une session qui tourne pendant une revue VERIF fausse la mesure : **VERIF ne passe que sessions à l'arrêt**, et toute session s'interrompt par un « stop propre » (fin de la sous-étape, commit, compte-rendu, bloc 6 = point de reprise), jamais par Échap. (4) **Continuité : une fenêtre lourde n'est pas une raison de s'arrêter** (Alexandre, 20/10 22h31 ; remplace le « stop propre à 70 % » écrit le même jour). Quand une session arrive au bout de sa mémoire, l'outil la résume et elle continue — ce n'est pas un arrêt. Donc : à chaque frontière de partie et de lot, la session écrit dans le devlog le compte-rendu six blocs **et le point de reprise exact** (lot, partie, état) ; si sa mémoire est résumée en route, elle relit le devlog et le brief du lot en cours et reprend ; elle ne s'arrête qu'à la fin de la chaîne ou si l'outil lui-même la bloque. La mémoire, c'est le dépôt (§9). Une session qui a vécu une très longue journée peut être **remplacée par une session neuve avant de démarrer une chaîne** (moins de tokens, moins de confusion) : l'ancienne note la passation dans SESSIONS et s'arrête, la neuve lit le dépôt et reprend — jamais deux écritures en même temps (D12). La session ne s'arrête jamais pour une question dont la réponse est « fais-le proprement ». (5) **LibreOffice hors du chemin critique** (20/10 soir : un recalc de 18 Mo a dépassé 260 s dans une session) : aucun recalc `soffice` ne conditionne la fin d'un lot ; la session teste en import et à vide, note « recalc à lancer hors session », et le recalc complet tourne en tâche de fond sur la machine d'Alexandre.
+
+---
+
+## 14. L'entretien — pour que les projets durent (18/10)
+
+Le cleaning rattrape le désordre ; l'entretien empêche qu'il revienne. Six sources de désordre ont été identifiées sur trois semaines : un document nouveau au lieu d'un document complété · des versions qui cohabitent · la même information écrite à plusieurs endroits · des entrées non rangées · rien qui n'expire · le poids (git, journaux, contexte). Une règle par source, un rituel qui vérifie que les règles tiennent.
+
+### 14.1 Les huit règles d'hygiène
+
+1. **Une maison par sorte d'information.** Une information trouvée ailleurs est **déplacée** dans sa maison, jamais copiée.
+
+   **Table des maisons (mise à jour 20/10, décisions d'Alexandre — appliquée à BDD et à l'usine ; OWL garé, Deck Master fusionné dans BDD).** Racine d'un dépôt : les **clients numérotés** et leurs sœurs, puis `B-doc/` (provisoire, reliquats, disparaît une fois vidé), `C-pilotage/`, `D-regles/`, `E-systeme/`, `Z-a-supprimer/`, `B-a-transferer/`. **Plus de `Z-archive/` nulle part** : ce qui y était va en `C-backups/` (version antérieure d'un fichier vivant, selon rétention) ou en `Z-a-supprimer/`. **Plus de dossier de pilotage dans les dossiers clients.**
+
+   | Sorte | Maison | Rien d'autre n'y vit |
+   |---|---|---|
+   | règles (dures, surveillées, défaut), registre canonique, journal des consignes, ce fichier | `D-regles/` (`0-fonctionnement.md`, `1-regles-dures.md`, `2-…`, `3-…`, `4-…`, `journal-consignes.md`, README) — règles clients avec marqueur `CHICHI-`… | pas de contexte, pas de plan |
+   | **tout le `.md` du projet hors règles** : contexte (fiches, audits, méthode, vision, registres de données), plans, lots, **le devlog** (`devlog.md`, §14.3), questions, listes à valider, santé du projet, tâches récurrentes, **`faits-courants.md`** (dix lignes à date de péremption), **`decisions-autonomes/`** (traçabilité des runs autonomes, suivie par git — jamais dans `Z-travail/`, qui n'est jamais suivi) | **`C-pilotage/`** unique — marqueur client ou `GLOBAL-` devant les noms hors nomenclature ; récurrentes en `GLOBAL-recurrent-…` ; README = index du fichier actif par sujet et par client. **Plus d'état du jour** (20/10 soir : il se déduit du devlog) | — |
+   | chemins | `paths.py` (un seul module par projet) | aucun chemin en dur ailleurs |
+   | scripts | `E-systeme/` (+ `<N>-<client>/E-scripts/`), catalogue | — |
+   | **dossier client `<N>-<client>/`** (BDD) | `A-exports/` (D11) · `A-sources-references/` (documents fournis par Alexandre ou le client, D11) · `B-prod-claude/` (analyses, commentaires, rendus produits par l'IA) · `C-backups/` · `D-Livrable/` (staging du pipeline deck, provisoire) · `E-scripts/` · `Z-travail/` | pas de pilotage, pas d'archive |
+   | **dossier de marque `<N>-<marque>/`** (usine) | `A-sources-references/` (brief, docs marque, `retours/`) · `A-packshots-originaux/<produit>/` · `B-concepts/` · `B-prod-claude/` (+ `preuves/`) · `C-backups/` · `Z-travail/` | pas de pilotage, pas d'archive |
+   | sœurs (usine) | `<N>-<marque>-livrables/` (à plat + `A-concepts-valides-plaquette/`) · `<N>-<marque>-visuels/` (statuts : `A-valides-plaquette` · `B-a-retravailler` · `C-bruts-sans-mise-en-page` · `C-designs-non-valides` · `D-elements-pour-fabriquer` · `D-inspiration` · `E-rejetes-conserves` · `Z-anciens`) | — |
+   | sœurs (BDD) | `<N>-<client>-livrable/` (envoyé au client, dernière version, `<type>-AAMMJJ.<ext>`) · `<N>-<client>-propositions/` (rendus internes, noms conservés) | — |
+   | sorties pour Alexandre | `B-a-transferer/` | — |
+   | à supprimer | `Z-a-supprimer/` racine + `liste.md` | — |
+   | `CLAUDE.md` (racine et client) | **pointe, ne contient pas** : qui fait quoi, table des maisons, registre des clients, le fichier actif de chaque sujet, le minimum vital à lire, la règle d'ignorance | aucune règle métier, aucun contexte |
+
+   **Registre des clients** (même numéro dans tous les projets ; 20/10) : **1** Tech / La Bonne Remise · **2** Artica · **3** Chichi Castelnango · **4** March LA.B · **5** Rouge Gorge · **6–9** réservés aux prochains clients récurrents · **10** NV Gallery · **11** Plantes d'Île-de-France · suivants = autres clients. Les dossiers portent `<N>-<nom>` ; les fichiers gardent leur marqueur texte (`CHICHI-`, `TECH-`…).
+
+2. **Incorporer plutôt qu'ajouter.** Une information nouvelle sur un sujet qui a déjà son fichier s'écrit **dans ce fichier** (section ajoutée, ligne modifiée, « Mis à jour le … » en tête). On ne crée un fichier que pour un **sujet nouveau**. Vaut pour les règles, le contexte, les plans, les journaux, les comptes-rendus (on complète le journal, on ne crée pas « compte-rendu v2 ») — et pour le cerveau (ses fichiers dettes, journal, arborescence, fonctionnement sont vivants, écrasés en place, sans `_vN` nouveau).
+3. **Un fichier actif par sujet, nommé.** Pour chaque sujet (le plan Chichi, les règles dures, le registre des exports, la charte…), **un** fichier fait foi, et le `CLAUDE.md` ou le README du dossier **dit lequel**. Une session qui cherche « le plan Chichi » lit cette ligne au lieu de deviner.
+4. **Rangement d'entrée au début de chaque lot** (§13.2) ; sorties dans `B-a-transferer/`.
+5. **Tout ce qui est actif porte un en-tête de vérité** (20/10 soir, étend la règle date + propriétaire) : `statut : actif | clos | périmé · mis à jour le · porté par · remplace`. Règle (« depuis le », « surveillée jusqu'au »), plan, lot, dette (« ouverte le », « bloque / ne bloque pas »), document. **Une session n'exécute qu'un plan ou un lot `actif`** ; un fichier sans en-tête n'est pas une consigne. `revue.py` liste ceux sans en-tête ou sans mouvement depuis 30 jours. Sans date, c'est à dater à la revue, pas à jeter. **Faits à péremption** : `C-pilotage/faits-courants.md`, dix lignes maximum, chaque ligne avec une date de fin (« présentation Chichi passée le 19/10 », « NCAC août 2026 = 15,49 € », « deck de référence = deck-261019 ») — Alexandre donne la date, la session sait quand c'est fini ; la revue signale les lignes expirées ; lu au rituel de démarrage.
+6. **Rien ne se supprime : tout passe par `Z-a-supprimer/`, et c'est Alexandre qui supprime** (D5). Les sessions déplacent et listent ; la rotation des backups de fichiers est la seule mécanique qui tourne seule, et elle déplace aussi. Pour les règles, instructions, plans et contexte, la suppression physique est **toujours** d'Alexandre. Une seule exception (19/10) : une **copie exacte au caractère près** d'un fichier présent ailleurs peut être supprimée par la session — jamais une entrée d'Alexandre (D11). Avant une purge, la session **pré-trie** `Z-a-supprimer/` (versions vivantes à remonter en `C-backups/` / à supprimer) et vérifie que les dernières versions de chaque master et rendu existent hors du dossier ; Alexandre n'a plus qu'à dire oui et supprimer (explorateur ou commande fournie).
+7. **Les `.md` suivis par git ne se perdent jamais** (historique) : le risque n'est pas la perte, c'est l'oubli. `Z-a-supprimer/liste.md` garde, pour chaque fichier, la raison, « remplacé par » le cas échéant et la date — c'est l'index de ce qu'on a écarté. Les fichiers ignorés par git (`.xlsx`, `.png`, `.pdf`) sont les seuls dont la suppression est réelle : c'est pour eux que la purge mensuelle compte.
+8. **Renommer quand on touche**, jamais en masse ; `git mv` toujours (l'historique suit). Nomenclature courte dans les dépôts (cible, à faire au fil de l'eau, jamais en lot dédié) : `AAMMJJ-type-sujet-CLIENT.md`, le client **à la fin, gardé** ; la nomenclature complète reste pour ce qui voyage (`B-a-transferer/`, livrables).
+9. **Un identifiant de lot partout** (20/10 soir) : `L-AAMMJJ-NN`, dans le lot, les commits, l'entrée du devlog, les questions. `grep` d'un identifiant donne tout ce qui touche un lot ; un plan dont aucun lot n'a été ouvert depuis 30 jours est un suspect.
+
+### 14.2 Les trois verbes de dépôt
+
+Quand un fichier arrive à la racine (d'Alexandre ou du cerveau), la session qui range applique **un** verbe. Le nom ou l'en-tête du fichier peut le dire ; sinon le défaut est « Complète ».
+
+- **Complète** (défaut) : le fichier porte sur un sujet qui a déjà son fichier actif → la session **incorpore** son contenu dans l'actif (sections ajoutées, « Mis à jour le … — incorpore : <fichier> » en tête), met les pointeurs à jour, et le fichier déposé part en `Z-a-supprimer/` avec « incorporé dans … ». Si les deux se contredisent : **les deux versions côte à côte** dans l'actif, « contradiction à trancher », ligne dans la liste à valider.
+- **Nouveau sujet** : aucun fichier actif sur ce sujet → le fichier déposé devient l'actif, rangé dans sa maison, nommé dans le `CLAUDE.md` ou le README.
+- **Remplace** : **livrables seulement** (deck, classeur, PDF, planche). L'ancien livrable suit D8 (jamais écrasé) et la rétention des backups. Pour les règles, le contexte et les plans, « Remplace » n'existe plus : c'est « Complète ».
+
+### 14.3 Le compte-rendu normé — six blocs, toujours
+
+Tout ce qu'une session rend (fin de lot, mi-lot, fin de run autonome, réponse à un complément), dans n'importe quel projet, et toute passation du cerveau : « Session : NOM » puis **ces six blocs, ces titres exacts, cet ordre, rien d'autre**. Un bloc vide s'écrit « — », il ne disparaît pas. Les chiffres sont en tableau. VERIF contrôle la forme (point 5) : un compte-rendu sans les six blocs est renvoyé.
+
+**Le devlog — une information écrite une fois, à l'endroit où on ira la chercher (Alexandre, 20/10 soir).** Le journal de chantier devient **`C-pilotage/devlog.md`, un par projet, en ajout seulement, jamais réécrit, jamais condensé** (on le lit par la fin). **C'est la seule écriture de fin de lot.** Chaque entrée : identifiant de lot, heures lues, session et modèle utilisés, fenêtre consommée, le compte-rendu six blocs, les dettes nées ou soldées dans le lot, les complications. La fenêtre affiche **une ligne** : `L-261020-07 rendu · vert · 3 commits · devlog l. 412`. Les tables (dettes, registre des plans, santé) sont des **vues d'état** : elles disent où on en est, le devlog dit comment on y est arrivé. Conséquences : `SESSIONS.md` = **une ligne par session** (nom, rôle, créée le, statut), jamais par lot ; **l'état du jour disparaît** (dernière entrée du devlog par client, générée par `revue.py` si besoin) ; `registre-des-plans` ne bouge que si le statut d'un plan change ; le journal des consignes ne reçoit que des règles, dérogations et décisions, jamais le récit d'un lot ; `a_valider_par_alexandre` reste la seule liste de questions (ligne ajoutée quand une question naît, retirée quand il répond). Un lot ordinaire = une écriture ; un lot qui ferme un plan = deux ; un lot qui découvre une règle = trois. Jamais la même phrase à deux endroits. Le devlog inter-projets, c'est le dépôt stratégie qui le génère par dump, personne ne l'écrit.
+
+> **1. Fait** — une ligne par chose faite, avec le chiffre quand il y en a un (fichiers déplacés : 38 ; règles réécrites : 12).
+> **2. Non fait + raison** — une ligne par chose prévue et non faite, la raison en une phrase, et ce qu'il faudrait pour la faire.
+> **3. Fichiers produits ou modifiés** — nom exact · chemin complet · ce que c'est (nouveau / mis à jour / déplacé vers / incorporé dans) ; y compris le rangement d'entrée.
+> **4. À valider par Alexandre** — une ligne par décision, formulée pour qu'un **oui** ou un **non** suffise.
+> **5. Questions restantes** — ce qui bloque ou bloquera, une ligne chacune.
+> **6. Prochaine étape** — ce que la session fera au prochain lot, trois lignes maximum.
+
+### 14.4 Le gabarit de message
+
+Tout ce qu'on colle dans une fenêtre (lot, complément, run autonome, question) :
+- **En-tête, une ligne** : fenêtre · objet · mode (lot / complément / MODE AUTONOME) · heure limite s'il y en a une. Un complément commence par « Complément, ne t'interromps pas, termine d'abord ».
+- **Corps** : contexte (pourquoi), ce qu'il faut lire d'abord (noms exacts), règles dures qui s'appliquent, **étapes numérotées, sans plafond de temps** (20/10), conduite à tenir par cas bloquant, interdits. Court si le lot est déjà dans `C-pilotage/` (§8).
+- **Fin** : les livrables attendus, **noms exacts et chemins**, et le rappel « compte-rendu à six blocs, puis stop ».
+
+### 14.5 La revue d'entretien — toutes les deux semaines, par VERIF
+
+Lecture seule ; **calendrier** (pas de compte de prompts) : toutes les deux semaines à partir du 2/11, **et** après toute refonte (arborescence, règles) ou tout run autonome. **Liste fermée de dix contrôles**, un fichier de dix lignes `C-taches-en-cours/sante-du-projet.md`, **écrasé** à chaque revue (c'est un indicateur, pas un journal), une ligne par contrôle : 🟢 / 🟠 / 🔴 · le chiffre · où regarder.
+
+1. **Règles contradictoires** : deux règles actives sur le même objet qui disent autre chose.
+2. **Règles mortes** : une règle active cite un chemin, un fichier, une session ou un script qui n'existe plus.
+3. **Doublons de sujet** : plus d'un fichier actif sur un même sujet (hors `Z-…`).
+4. **Plans sans mouvement** depuis plus de 15 jours, ou dont l'état du jour contredit les étapes.
+5. **Fichiers à la racine** (hors `CLAUDE.md`, `SESSIONS.md`, `paths.py`, `.gitignore`, README).
+6. **`Z-a-supprimer/` non purgé** depuis plus d'un mois (taille, nombre).
+7. **Dettes** ouvertes depuis plus de 30 jours, ou marquées « bloque ».
+8. **Journaux non condensés** (dernier vendredi manqué) ; comptes-rendus hors gabarit six blocs sur la période.
+9. **Ancienne nomenclature** dans le périmètre architecte (`.md` de `D-regles/`, `B-doc/`, `C-plans/`).
+10. **Poids** : taille de `.git` et variation depuis la dernière revue ; les 5 plus gros fichiers suivis ajoutés sur la période.
+
+Alexandre lit dix lignes par projet ; le cerveau lit les quatre pour la revue hebdo ; le méta-projet (§14.7) les consomme telles quelles.
+
+**Automatisation (20/10 soir).** Huit des dix contrôles sont mécaniques (chemins morts, règles sans date ou sans en-tête, comptes-rendus absents du devlog, fichiers hors maison, fichiers à la racine, taille du dépôt, fichiers interdits suivis, plans sans mouvement, import + lancement à vide de chaque script du catalogue — ce qui remplace le « test de fumée » séparé) : `E-systeme/revue.py` les fait en quelques secondes et génère aussi `INDEX.md` (un fichier actif par sujet, date, statut — une session lit l'index, pas les dossiers). VERIF ne lit que le tableau et juge les deux contrôles restants (contradictions, doublons de sujet). **Chasse aux contradictions, chaque lundi, par un sous-agent frais** : il lit toutes les règles des dépôts et sort les paires qui se contredisent ou se recouvrent, avec les numéros ; Alexandre tranche en cinq minutes (20/10 : « rien de `Z-travail/` n'est suivi » contre « les décisions autonomes sont tracées » — résolu par un changement de maison, pas par l'une des deux règles). **Garde-fous git** : seuls **trois blocages** — un master ou un export dans un commit, un secret, un fichier de plus de 10 Mo ; tout le reste **avertit sans bloquer** (identifiant de lot manquant, fichier hors maison, en-tête absent) ; un avertissement qui revient trois fois devient une règle ou disparaît ; un blocage ne s'ajoute qu'après un incident irréversible. Le cerveau signale explicitement (« ceci bloque ») toute proposition limitante, pour qu'Alexandre puisse dire non.
+
+### 14.6 La purge mensuelle
+
+Le **1er de chaque mois** (à partir du 1/11), Alexandre ouvre `Z-a-supprimer/liste.md` de chaque projet, dit « confirmer suppression » pour ce qu'il confirme, et **supprime lui-même**. Ce qu'il ne confirme pas reste dans `Z-a-supprimer/` avec sa raison. Entre deux purges, aucune session ne supprime.
+
+### 14.7 Le dépôt « stratégie » (décidé le 20/10 soir — dès maintenant, test le 21/10)
+
+**Un troisième dépôt, en ligne, qui porte `0-fonctionnement.md` et les règles communes ; chaque `CLAUDE.md` pointe vers lui.** Un seul endroit à mettre à jour : plus de dépôt oublié, plus d'écrasement qui perd une ligne (dette C12). Le cerveau peut y pousser lui-même les fichiers globaux depuis Claude.ai : Alexandre sort du circuit des fichiers globaux (test sur un fichier le 21/10 avant d'en faire la règle). **Cible (Alexandre, 20/10 22h41) : le cerveau lui-même devient une session Claude Code dans le dépôt stratégie** — il lit les devlogs des projets, tient les fichiers globaux dans un dépôt et non dans une conversation, et pousse lui-même ; la conversation Claude.ai reste le lieu du brainstorm avec Alexandre, pas celui des fichiers. **Les décisions d'Alexandre vivent dans les dépôts** : `decisions-alexandre.md` (dans le dépôt stratégie pour le global, dans `C-pilotage/` d'un projet pour ce qui lui est propre), ses mots verbatim, une ligne par décision avec date et durée de validité (« permanent » ou « vaut jusqu'à … ») ; le journal des réponses tenu par le cerveau y est versé et cesse d'être la seule copie ; **il y a un backlog de retours d'Alexandre à y consigner**. Il grandit ensuite en méta-projet : un projet Claude Code qui **possède les fichiers globaux** (ce fichier, l'arborescence commune, la nomenclature, les dettes transverses, le journal des décisions d'Alexandre — ce que le cerveau tient aujourd'hui à la main) et **lit** les quatre projets : un dump daté de `D-regles/`, `C-plans/`, `C-taches-en-cours/sante-du-projet.md` et des CLAUDE.md, en **lecture seule**, dans `lecture/<projet>/<date>/`. Il cherche les contradictions entre projets, l'obsolète, le critique, et produit le rapport ; **toute correction se fait dans le dépôt d'origine**, jamais dans le dump. S'il a besoin d'une analyse, il écrit un script et le fait tourner **dans** le projet concerné. Il n'est jamais la source de vérité d'une règle projet.
