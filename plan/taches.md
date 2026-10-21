@@ -12,8 +12,9 @@ Une ligne par tâche. Le tableau de bord des grandes tâches (par projet) est da
 - À terme (rituels hérités du cerveau) : revue hebdo des devlogs/dettes/mesures · chasse aux contradictions par sous-agent · pré-tri avant la purge mensuelle.
 
 ## Ouvertes
-- ⏸ Alexandre colle les deux messages d'alignement de `0-fonctionnement.md` (`B-a-transferer/bdd/`, `B-a-transferer/usine/`) ; les architectes tirent la version commune.
-- ⏭ Quand les projets sont alignés : faire pointer leurs `CLAUDE.md` sur la version commune (la « tirer » automatiquement).
-- ⏭ Moisson MD Brain terminée → suivre les « incorporer » et la file « question à Alexandre » (voir `rapports/`).
+- ✅ Les deux projets ont tiré `0-fonctionnement.md` **version 16h47** (BDD + usine `L-261021-18`) — lu sur disque le 21/10.
+- ⏭ La **version 17h22** ajoute la règle MD Brain (§14.1 r11) : à tirer au **prochain alignement** (message à écrire quand Alexandre le voudra).
+- ✅ MD Brain **rangé et versé** (`L-261021-05`) : global incorporé, 11 sources clients signalées à BDD (`B-a-transferer/bdd/`), 15 périmés/incorporés en corbeille. ⏭ suivre le quai `rapports/md-brain-transferts.md` (passer « déposé » quand les devlogs projets le montrent, vider le quai).
+- ⏭ Suivre la file « en attente de décision » et les « à confirmer » (nomenclature levée le 17h13).
 - ⏭ Rapatrier les éventuelles lignes de fond des projets dans la version commune, en gardant les notes `[projet]`.
 - ⏭ À terme : le cerveau pousse lui-même depuis ce dépôt (il cesse d'être le bus des fichiers globaux).
