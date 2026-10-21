@@ -45,3 +45,39 @@
 - **5. Questions restantes** — —
 
 - **6. Prochaine étape** : rédiger les messages de lancement aux deux architectes (corriger C1–C3, aligner `0-fonctionnement.md`) ; à terme, rapatrier dans la référence stratégie les §14.1 à jour du 21/10 en gardant les notes propres aux projets.
+
+---
+
+## L-261021-03 — Réconciliation de `regles/0-fonctionnement.md` (STRATEGIE, Claude Code, modèle Opus 4.8)
+- Heures : 21/10, 13h00 → **13h11 (lues)**. Fenêtre : **estimée** ~15 tours (l'outil n'affiche pas de pourcentage, §9).
+- Préalable : push `L-261021-02` d'abord **rejeté** (le cerveau avait poussé `7482dfe` : refonte du plan-de-route en tableau de bord). **Merge** `origin/main` (jamais de force) — seul conflit `plan-de-route.md`, résolu en gardant la version du cerveau (validée 12h53) ; merge `240a1a8` poussé. Puis ce lot.
+
+- **1. Fait**
+  - `regles/0-fonctionnement.md` **réconcilié** = base 22h50 **+** arbo du 21/10 des deux projets, **sans rien perdre de la 22h50** :
+    - §14.1 — intro : `B-doc/` retiré (dissous) ; usine `[projet usine]` + `0-maquette/`, `B-marches/`, `F-references/` (banque à plat).
+    - §14.1 — rangée scripts : `E-systeme/clients/<N>-<client>/` (plus de `E-scripts/` client).
+    - §14.1 — dossier client BDD `[projet BDD]` : **4 dossiers** (`A-exports`, `A-sources-references`, `B-prod-claude` + `travail/`, `C-backups`) + `CLAUDE.md` + `MASTER.md` ; plus de `D-Livrable/` ni `Z-travail/`.
+    - §14.1 — dossier de marque + sœurs usine `[projet usine]` : `travail/` hors git, sources/packshots → `-ressources/` ; `-visuels/` à **8 dossiers** ; sœur `-ressources/` détaillée.
+    - §14.1 — registre : **Artikka (ex-Polara), client 2, 12 libéré**.
+    - §11 — règle **source unique** + « chaque projet garde ses lignes propres marquées `[projet]` » (ex. note remote usine `[projet usine]`, qui reste chez l'usine).
+    - En-tête : « mis à jour le 21/10 13h08 (heure lue) · porté par STRATEGIE » + ligne « ce que cette version change ».
+  - Conservé de la 22h50, vérifié : continuité (§13.5 4, plus le 70 %), ordre des travaux (§12, plus de calendrier), §9 mesure estimée, codes avec nom (§13.3), cerveau dans ce dépôt (§13.4 r12 / §14.7).
+  - Deux messages prêts à coller écrits dans `rapports/` (un par architecte) : « remplacer `D-regles/0-fonctionnement.md` par la version strategie du 13h08, garder les lignes `[projet]`, commit/push/devlog ». Le message usine rappelle explicitement de **réinsérer la note remote §7**.
+  - `plan-de-route.md` tâche 3 : « règles : source unique = ce dépôt ; projets à aligner (messages prêts) ».
+
+- **2. Non fait + raison**
+  - Les projets ne sont **pas encore alignés** : c'est Alexandre qui colle les deux messages aux architectes (hors périmètre STRATEGIE, lecture seule sur les voisins).
+
+- **3. Fichiers produits ou modifiés**
+  - `regles/0-fonctionnement.md` — mis à jour (réconciliation §14.1, §11, en-tête).
+  - `plan-de-route.md` — mis à jour (tâche 3 + colonnes projets).
+  - `rapports/261021-message-BDD-ARCHITECTE-alignement-regles.md` — **nouveau**.
+  - `rapports/261021-message-CREA-ARCHITECTE-alignement-regles.md` — **nouveau**.
+  - `devlog.md` — cette entrée (ajout).
+
+- **4. À valider par Alexandre**
+  - Coller les deux messages d'alignement (BDD-ARCHITECTE, CREA-ARCHITECTE).
+
+- **5. Questions restantes** — —
+
+- **6. Prochaine étape** : une fois les projets alignés, la version commune pourra être « tirée » automatiquement (les `CLAUDE.md` pointent dessus) ; STRATEGIE restera responsable de la version commune et des lignes `[projet]`.
