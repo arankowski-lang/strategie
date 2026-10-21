@@ -142,3 +142,23 @@
 - **5. Questions restantes** — —
 
 - **6. Prochaine étape** : marquer « déposé » dans `rapports/md-brain-transferts.md` et vider le quai quand les devlogs projets montrent les dépôts ; écrire le message de tirage 17h22 au moment voulu ; suivre la file « en attente ».
+
+---
+
+## L-261021-06 — Règle « pas de git pull chez les voisins » + schéma visuels unique (STRATEGIE, Claude Code, modèle Opus 4.8)
+- Heures : 21/10, 17h33 → **17h38 (lues)**. Fenêtre : estimée ~8 tours. Lot court, un commit de contenu + ce CR.
+
+- **1. Fait**
+  - `CLAUDE.md` : règle gravée (validée par Alexandre) — « **Lecture seule = pas de `git pull` dans les dépôts voisins** (un pull écrit dans leur arbre) : on lit l'arbre tel qu'il est sur le disque. »
+  - `regles/arborescence-commune.md` : **ancien schéma visuels supprimé** là où il contredisait le §8 — §5 (passe 3, l.103 : `B-a-retravailler/` + `a-revoir/en-attente/a-potentiel`) et §6 (l.122) remplacés par un **pointeur vers §8** avec mention « périmée ». **Un seul schéma de base visuelle dans le fichier** (§8, exécuté `L-261021-17`). Vérifié : plus aucune occurrence vivante de `a-revoir` ; `B-a-retravailler` ne subsiste que comme ex-nom en §8 et dans les notes « périmée ».
+
+- **2. Non fait + raison** — —
+
+- **3. Fichiers produits ou modifiés**
+  - `CLAUDE.md` (règle lecture seule / pas de pull) · `regles/arborescence-commune.md` (§5 et §6 : ancien schéma visuels → pointeur §8) · `devlog.md` (cette entrée).
+
+- **4. À valider par Alexandre** — —
+
+- **5. Questions restantes** — —
+
+- **6. Prochaine étape** : **stop jusqu'au message de nuit** (le tirage 17h22 par les projets se fera dans la chaîne de nuit).
