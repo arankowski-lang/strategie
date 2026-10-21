@@ -18,3 +18,8 @@ Une ligne par tâche. Le tableau de bord des grandes tâches (par projet) est da
 - ⏭ Suivre la file « en attente de décision » et les « à confirmer » (nomenclature levée le 17h13).
 - ⏭ Rapatrier les éventuelles lignes de fond des projets dans la version commune, en gardant les notes `[projet]`.
 - ⏭ À terme : le cerveau pousse lui-même depuis ce dépôt (il cesse d'être le bus des fichiers globaux).
+
+## Veille des chaînes de nuit (21/10 → matin, lot `L-261021-07`)
+Lecture sur disque toutes les ~30 min (≤ 10 passes ou 2× « chaîne terminée »). On n'intervient pas chez les voisins.
+- **passe 1 · 18h18 (lue)** · BDD : dernier `L-261021-20` (BDD-CHICHI-CREA classeur créa v4, 17h41) ; chaîne **BDD-ECRITURE A–G** pas encore visible (dernier BDD-ECRITURE = `L-261021-14`, 16h44). · usine : chaîne de nuit **démarrée, lot 1/5 = `L-261021-20`** (contrôle 11 valeurs de référence dans `revue.py`) ; aligné 16h47 (`L-261021-18`). · 🔴/non-fait : aucun.
+- **info reçue ~18h30 (pour le rapport du matin, activité normale, pas d'intervention)** : (1) nouvelle session **BDD-DECK-CREA** (deck d'exploration de l'analyse créa Chichi), périmètre déclaré = `3-chichi-propositions/deck-crea/` (+ `travail/`) + CR au devlog ; jalons `…deck_crea_pilote_v1/v2/v3`. (2) nouveau lot **BDD-CHICHI-CREA** : `BDD-261021-CHICHI-CC-P-ANALYSE-etat_des_lieux_modules_creas.md` (dans `3-chichi/B-prod-claude/crea/`). (3) collision d'identifiants entre dépôts → **règle de préfixe gravée** (`L-BDD-/L-USINE-/L-STRAT-`, lots à venir, §14.1 r9) ; appliquée dès le prochain lot STRATEGIE (`L-STRAT-261021-08`).
