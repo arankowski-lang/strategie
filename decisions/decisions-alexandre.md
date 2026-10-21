@@ -22,6 +22,20 @@ Une ligne par décision : date · texte verbatim (ses mots) · validité (« per
 | 21/10 10h50 | Pas de réécriture d'historique pour les 304 fichiers `Z-travail/` (11 Mo). `git add -f` interdit comme `add -A`. | permanent | garde-fous |
 | 21/10 12h29 | Audit du process validé : verrou par dépôt, revue en fin de chaîne par sous-agent, manifeste de déplacement, valeurs de référence par client, `pieges-connus.md`, file unique de décisions, cerveau dans le dépôt stratégie. | permanent | plan-de-route |
 
+## Moisson MD Brain (consignée le 21/10, lot `L-261021-04`)
+Décisions d'Alexandre **antérieures au 14/10**, trouvées dans `1. MD BRAIN/` et absentes du registre. Ajoutées sans réécrire aucune ligne ; validité « à confirmer » quand une décision plus récente la recouvre ou la périme. (Résumé fidèle ; les guillemets marquent ses mots exacts.)
+
+| Date | Décision | Validité | Source (`MD Brain/…`) |
+|---|---|---|---|
+| 28/08 | **Q24 — conventions au cas par cas** : les conventions portefeuille (assiette MER net, nouveau client, datation, formats/décimales, coloration, funnel minimal, ton sobre…) s'examinent **au lancement de chaque client** ; le cerveau re-présente la liste des conventions gravées pour valider ce qui s'applique et écrire les dérogations. | **à confirmer** (peut être absorbée par « un client à la fois » 11/10 et « incorporer » 18/10) | `1.ML/projet_rapport_guidelines_march.md` §7 |
+| 11/10 | **Un client à la fois** : une amélioration de feuilles se valide sur un seul client, puis se déploie sur les autres avec leurs spécificités (squelette/arborescence uniforme validé puis déployé). | permanent (process) | `CERVEAU-261011-…-decisions_validation_pdf_v4…md` |
+| 11/10 | **NCAC en euros entiers, arrondi standard, jamais de troncature** (14,79 € → 15 € ; « 14,7 » était une troncature). | **à confirmer** (affichage ; matière référentiel BDD) | `CERVEAU-261013-…-feuille_de_route_developpement.md` §6 |
+| 11/10 | **« Un outil n'est fini que s'il a servi une fois pour de vrai »** : un outil ne démarre que si son livrable sert dans un appel/prospection sous 30 jours, et après validation du référentiel commun v1. | permanent (priorisation produit) | `CERVEAU-261013-…-feuille_de_route_developpement.md` §1 |
+| 11/10 | **Priorités produits** (1 = + prioritaire) : G1 simulateur « deux ROAS de 4 » = **premier test du référentiel** ; déclinaison du reporting P4 ; créa IA en abonnement P4 ; « machine learning seulement sur la créa, plus tard ». | **à confirmer** (datées 11/10 ; certaines hors périmètre aujourd'hui — OWL garé, prod usine ; cf. `plan/feuille-de-route-produits.md`) | `CERVEAU-261013-…-feuille_de_route_developpement.md` §4/§9 |
+| 11/10 | **Rétention « une sur dix »** : version N gardée si N multiple de 10, + socle d'exceptions (envoyée client / validée / citée par script / change de décision). | **à confirmer / périmée** (remplacée par le socle protégé de D5 et la rétention usine du 18/10) | `BDD-261011-…-plan_bdd_nettoyage_v2…md` T8 |
+
+**Non promues au registre** (déjà en vigueur comme règles, pour éviter le doublon) : fenêtres d'attribution Google 28 j / Meta 7 j sans vue (= **D4**) · assiette unique MER/CAC/NCAC = Online Store seul, CA net, honoraires exclus (= dure BDD **B-R24**) · alignement sur le scénario le plus optimiste (= §7 / §13.4 r8). **Matière projet** (à moissonner par l'architecte du projet, pas ce registre global) : CAC cible March = 202 (BDD) ; règles de rédaction des messages clients (REPORTING/MSG).
+
 ## En attente de décision (file unique — Alexandre répond ici, une ligne par réponse)
 - Chichi-D3 : marge par catégorie, ou 65 % global ?
 - Chichi-D22 : lecture `MetaSegments`, ou dimension campagne au Moteur v2 ?

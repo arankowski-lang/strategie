@@ -122,3 +122,24 @@ Usine, principe de nommage : marché = `M1…M6` ; chaque marque porte le tag de
 - **Base visuelle usine** (`<N>-<marque>-visuels/`) : `A-valides-plaquette/` · `B-a-retravailler/` (`a-revoir`, `en-attente`, `a-potentiel`) · `C-bruts-sans-mise-en-page/<type>/` · `C-designs-non-valides/` · `D-elements-pour-fabriquer/` (planches, typos, packshots-retravailles, pictos, fonds) · `D-inspiration/` (`concurrents/`, `moodboards/`) · `E-rejetes-conserves/` · `Z-anciens/`. Livrables : `A-concepts-valides-plaquette/`.
 - **Git** : dépôt privé par projet, `.git` réécrit sans classeurs/images/exports (BDD 3,2 Gio → 192 Mio ; usine 79 → 8,6 Mo), masters et données hors git (protégés par D8 et la rotation), `push` chaque fin de journée, `force-push` interdit, copie de `.git` par la session avant toute réécriture.
 - **Deck Master fusionne dans BDD** (migration en cours) ; **OWL garé**.
+
+## 7. Nomenclature des fichiers (incorporée le 21/10 depuis `MD Brain/…-nomenclature_fichiers_v3`, validée par Alexandre le 11/10)
+
+Deux formes coexistent (cf. `0-fonctionnement.md` §14.1.8) : **dans un dépôt**, la forme **courte** `AAMMJJ-type-sujet-CLIENT.ext` (client à la fin, gardé) ; **pour ce qui voyage** (`B-a-transferer/`, livrables), la forme **complète** ci-dessous.
+
+**Forme complète** : `PROJET-AAMMJJ-CLIENT-OUTIL-DUREE-TYPE-detail[-REMPL(nom_exact_sans_extension)].ext`
+
+| champ | valeurs | rôle |
+|---|---|---|
+| Projet | `BDD` · `CREA` · `VEILLE` · `REPORTING` · `CERVEAU` (+ `PZ` perso) | projet Claude Code, toujours en premier. *(21/10 : `REPORTING`/Deck Master est fusionné dans `BDD` ; `STRATEGIE` s'ajoute pour ce dépôt.)* |
+| Date | `AAMMJJ` | sans séparateur |
+| Client | `GLOBAL`, ou le marqueur texte du client (`TECH`, `CHICHI`, `MARCH`, `RG`, `DATACAT`…) ; `GLOBAL(X+Y)` pour 2-3 clients | *(21/10 : `POLARA` → `ARTIKKA` ; les **dossiers** sont numérotés 1-11, les **fichiers** gardent le marqueur texte)* |
+| Outil | `CC` / `CN` / `CC+CN` | Claude Code, session Claude.ai, ou les deux |
+| Durée | `P` / `E` | permanent / éphémère |
+| Type | `REGLES` · `BRIEF` · `CONTEXTE` · `ANALYSE` · `LIVRABLE` · `MESSAGE` | ce que c'est |
+| Détail | 2-4 mots en minuscules | précisément quoi |
+| REMPL | `-REMPL(nom_exact)` facultatif, **sans extension**, imbricable | le fichier remplacé (livrables seulement, D8) |
+
+**Séparateurs** : `-` entre champs, `_` dans un champ, `+` pour combiner, pas d'espace/accent/apostrophe. **Version d'un livrable** : `_v2`,`_v3` à la fin du détail + `REMPL(...)`.
+
+*(La forme complète sert à ce qui sort du dépôt ; à l'intérieur, la forme courte et les marqueurs texte suffisent. Statut : **à confirmer** par Alexandre — garder les deux formes ou non, voir `rapports/261021-md-brain-inventaire.md`.)*
