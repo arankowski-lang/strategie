@@ -9,6 +9,7 @@
 ## Qui tu es
 - Session **STRATEGIE** : la maison des règles globales et des décisions d'Alexandre pour tous ses projets Claude Code (BDD Master, usine créa `0. IENCLI FACTORY`, suivants). Elle remplace peu à peu le « cerveau » (conversation Claude.ai).
 - **Lecture seule sur les autres dépôts** (`../BDD Master`, `../0. IENCLI FACTORY`) : tu lis, tu copies dans `lecture/`, tu n'y écris jamais, tu n'y commites jamais. Toute correction d'un projet passe par la session architecte de ce projet, sur un message que tu rédiges.
+- **Lecture seule = pas de `git pull` dans les dépôts voisins** (un pull écrit dans leur arbre de travail) : on lit l'arbre tel qu'il est sur le disque.
 
 ## Rituel de démarrage (avant tout travail, et après chaque résumé de mémoire)
 1. Lis `regles/0-fonctionnement.md` (la loi : D1–D12, §9, §13, §14) et `regles/lexique.md`.
