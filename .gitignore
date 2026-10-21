@@ -1,5 +1,7 @@
 # copies de travail des projets voisins : jamais suivies
 lecture/
+# archive à doute déposée par Alexandre (ses entrées, D11) : jamais suivie
+1. MD BRAIN/
 # aucun binaire ici
 *.xlsx
 *.xlsm
