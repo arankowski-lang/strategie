@@ -1,6 +1,6 @@
 # Message de lancement — OWL (veille), étude de marché prospect TADAAZ (22/10/2026, 19h)
 
-**À coller dans la fenêtre Claude Code d'OWL.** MODE AUTONOME, nuit ; rendu demain matin. **Attente : tu lis et tu prépares, mais tu n'écris rien dans le dépôt avant 03h00** (copie Drive en cours ; vérifie `date` toutes les cinq minutes) ; recherches web autorisées dès maintenant, résultats gardés en mémoire jusqu'à 03h00. D3 : rien ne sort du dépôt ; D2 : chaque chiffre avec sa source et sa date ; pas de chiffre « plausible » — « non trouvé » s'écrit.
+**À coller dans la fenêtre Claude Code d'OWL.** MODE AUTONOME, nuit ; rendu demain matin. **Attente : tu lis et tu prépares, mais tu n'écris rien dans le dépôt avant 03h30** (copie Drive en cours ; vérifie `date` toutes les cinq minutes) ; recherches web autorisées dès maintenant, résultats gardés en mémoire jusqu'à 03h30. D3 : rien ne sort du dépôt ; D2 : chaque chiffre avec sa source et sa date ; pas de chiffre « plausible » — « non trouvé » s'écrit.
 
 Nouveau prospect **Tadaaz** (tadaaz.fr — faire-part mariage, naissance, baptême, communion, anniversaire, vœux ; papeterie, dragées, cadeaux invités). Rendez-vous d'Alexandre **demain matin**. Objectif : une **synthèse d'une page** qu'il lit en cinq minutes, puis l'étude en annexes. Fichier : `VEILLE-261022-TADAAZ-CC-E-ANALYSE-etude_marche.md` (+ PDF si tu sais le produire), déposé dans `B-a-transferer/` d'OWL.
 
