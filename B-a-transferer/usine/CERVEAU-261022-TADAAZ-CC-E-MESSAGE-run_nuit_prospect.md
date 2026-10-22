@@ -1,3 +1,5 @@
+> **REMPLACÉ le 23/10 00h30 par `CERVEAU-261023-TADAAZ-CC-P-BRIEF-run_nuit_usine.md` + `…CONTEXTE-prospect_tadaaz.md` + `…CONTEXTE-concepts_prompts.md`. Ne pas coller.**
+
 # Message de lancement — usine créa, run de nuit prospect TADAAZ (22/10/2026, 19h)
 
 **À coller dans la fenêtre Claude Code de `0. IENCLI FACTORY`** (session CREA-ECRITURE, writer du dépôt ; `crea-generation-visuels` pour les images ; `crea-verif` en lecture seule à la fin). Rédigé par le cerveau après brainstorm avec Alexandre (18h13 → 18h49). Mode SUPER AUTONOME : prospect, pas de client, aucune vanne client ; Alexandre relit tout demain matin à la main.
