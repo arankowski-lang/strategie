@@ -1,13 +1,14 @@
-# Générateur du deck client Chichi (pptx) — v4.5 du 22/10/2026
+# Générateur du deck client Chichi (pptx) — v4.6 du 22/10/2026
 
-**statut : à transférer · déposé par le cerveau le 22/10 14h · destination : `BDD Master/3-chichi-propositions/deck-crea/pptx/`**
+**statut : à transférer · déposé par le cerveau le 22/10 14h10 · destination : `BDD Master/3-chichi-propositions/deck-crea/pptx/`**
 
-Le deck client « Ce que les créas nous disent — et ce qu'on en fait » (22 pages) est produit par `build.js` (pptxgenjs) à partir des séries JSON de `3-chichi/B-prod-claude/crea/graphiques/`. Le fichier rendu de référence : `BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.5.pptx` (+ PDF), déposé par Alexandre.
+Le deck client « Ce que les créas nous disent — et ce qu'on en fait » (19 pages ; 18 en version épurée avec `LIGHT=1`) est produit par `build.js` (pptxgenjs) à partir des séries JSON de `3-chichi/B-prod-claude/crea/graphiques/`. Le fichier rendu de référence : `BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6.pptx` et `…_v4.6_epure.pptx` (+ PDF), déposés par Alexandre à la racine de BDD Master.
 
 ## Pipeline
 ```
 npm install pptxgenjs            # une fois, dans ce dossier (jszip vient avec)
-node build.js                    # écrit BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.5.pptx
+node build.js                    # écrit BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6.pptx
+LIGHT=1 node build.js            # version épurée (…_v4.6_epure.pptx) : mêmes données, une page par étude = titre + un graphique + « ce qu'on fait »
 python3 fix_ppr.py <fichier>.pptx    # retire les <a:pPr> en milieu de paragraphe (quirk pptxgenjs sur les puces à runs mixtes)
 soffice --headless --convert-to pdf <fichier>.pptx
 pdftoppm -jpeg -r 80 <fichier>.pdf page   # planches de contrôle (PIL pour la grille), à regarder page par page
@@ -22,7 +23,8 @@ Variable `GRAPHIQUES=<dossier>` pour pointer ailleurs que `../../../3-chichi/B-p
 - **Chiffres descriptifs (colonne entre graphique et bloc) : deux maximum, complémentaires, jamais une redite du graphique ou du tableau ; indicateur nommé (« index ROAS »)** — règle gravée (`decisions/decisions-alexandre.md`, 22/10 13h03). Centrés verticalement sur le graphique.
 - Tableau de détail en bas à gauche, secondaire (petit, centré sous les graphiques).
 - Écarts en relatif, pas d'euros, pas de « page inconnue », pas de cadres créa, pas de calendrier promo (annexe), comparaisons A vs B assumées.
-- Définitions en pied à gauche, période en badge à droite. Pages de section sombres, numérotées 01, 02…
+- Définitions en pied à gauche, période en badge à droite. Pages de section sombres, numérotées 01, 02… Chiffres héros centrés.
+- Les deux versions sortent du même `build.js` : on ne retouche jamais un pptx à la main, on change le générateur ou les séries.
 
 ## Manques connus (pour la version « chiffres à jour »)
 1. ROAS de la bande « au-delà des 20 créas » : déduit des parts (8 % du CA pour 16 % de la dépense) — à calculer directement.
