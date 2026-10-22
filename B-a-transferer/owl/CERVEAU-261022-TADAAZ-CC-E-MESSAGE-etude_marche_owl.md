@@ -1,3 +1,5 @@
+> **REMPLACÉ le 23/10 00h45 par `CERVEAU-261023-TADAAZ-CC-E-MESSAGE-ouverture_owl_etude_marche.md`. Ne pas coller.**
+
 # Message de lancement — OWL (veille), étude de marché prospect TADAAZ (22/10/2026, 19h)
 
 **À coller dans la fenêtre Claude Code d'OWL.** MODE AUTONOME, nuit ; rendu demain matin. **Attente : tu lis et tu prépares, mais tu n'écris rien dans le dépôt avant 03h30** (copie Drive en cours ; vérifie `date` toutes les cinq minutes) ; recherches web autorisées dès maintenant, résultats gardés en mémoire jusqu'à 03h30. D3 : rien ne sort du dépôt ; D2 : chaque chiffre avec sa source et sa date ; pas de chiffre « plausible » — « non trouvé » s'écrit.
