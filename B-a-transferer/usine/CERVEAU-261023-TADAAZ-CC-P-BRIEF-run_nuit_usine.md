@@ -28,7 +28,7 @@ Plus le CR six blocs au devlog avec le coût réel par lot et par technique, et 
 | `…CONTEXTE-prospect_tadaaz.md` | racine → `12-tadaaz-ressources/A-sources-references/` | fiche prospect sourcée, à compléter au scrape | entier |
 | `…CONTEXTE-concepts_prompts.md` | racine → `12-tadaaz/B-concepts/` | 11 concepts, techniques, prompts, lots de fin | entier |
 | `…passation_architecte_crea.md` | racine → `C-pilotage/` | règles de run non gravées (brief_ref ≤ 10 %, humains ≤ 20 %, zone sûre, pas de recadrage avant la fin, planche pour Alexandre, « message exhaustif ») | entier ; §3 → file « à graver » dans le CR, pas dans `D-regles/` ce soir |
-| 5 captures de pubs + captures site | racine → `12-tadaaz-ressources/H-ads-existantes/` et `…/analyse-site-et-concurrents/` | créas natives (`brief_ref`, `re-marque`), charte | entier |
+| pubs Tadaaz | **absentes de la racine** → à capturer toi-même dans la bibliothèque publicitaire Meta (page publique, FR) via le navigateur en phase 0, `12-tadaaz-ressources/H-ads-existantes/` hors git ; sinon référence = fiche prospect §3 (description des trois pubs) + visuels du site | créas natives (`brief_ref`, anti-pub, `re-marque`), charte | — |
 | tadaaz.fr | scrape | base site : visuels HD, textes, prix, options | — |
 | `run-autonome-pidf.md`, `pidf_run.py`, `pidf_lot.py`, `pidf_v0.py`, `pidf_prod.py`, `moteur.py`, `paths.py` | dépôt | gabarit du run (chemins réparés L-261021-16) | à la demande |
 | `D-regles/paquets/demarrage.md`, `generation-visuels.md`, `planches-gabarits.md`, `cloture-de-lot.md` | dépôt | paquets par tâche | entier |
