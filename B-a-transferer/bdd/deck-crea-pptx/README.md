@@ -1,14 +1,14 @@
-# Générateur du deck client Chichi (pptx) — v4.6.1 du 22/10/2026
+# Générateur du deck client Chichi (pptx) — v4.7 du 22/10/2026
 
 **statut : à transférer · déposé par le cerveau le 22/10 14h10 · destination : `BDD Master/3-chichi-propositions/deck-crea/pptx/`**
 
-Le deck client « Ce que les créas nous disent — et ce qu'on en fait » (19 pages ; 18 en version épurée avec `LIGHT=1`) est produit par `build.js` (pptxgenjs) à partir des séries JSON de `3-chichi/B-prod-claude/crea/graphiques/`. Le fichier rendu de référence : `BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6.1.pptx` et `…_v4.6.1_epure.pptx` (+ PDF), déposés par Alexandre à la racine de BDD Master.
+Le deck client « Ce que les créas nous disent — et ce qu'on en fait » (19 pages ; 18 en version épurée avec `LIGHT=1`) est produit par `build.js` (pptxgenjs) à partir des séries JSON de `3-chichi/B-prod-claude/crea/graphiques/`. Le fichier rendu de référence : `BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.7.pptx` et `…_v4.7_epure.pptx` (+ PDF), déposés par Alexandre à la racine de BDD Master.
 
 ## Pipeline
 ```
 npm install pptxgenjs            # une fois, dans ce dossier (jszip vient avec)
-node build.js                    # écrit BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6.1.pptx
-LIGHT=1 node build.js            # version épurée (…_v4.6.1_epure.pptx) : mêmes données, une page par étude = titre + un graphique + « ce qu'on fait »
+node build.js                    # écrit BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.7.pptx
+LIGHT=1 node build.js            # version épurée (…_v4.7_epure.pptx) : mêmes données, une page par étude = titre + un graphique + « ce qu'on fait »
 python3 fix_ppr.py <fichier>.pptx    # retire les <a:pPr> en milieu de paragraphe (quirk pptxgenjs sur les puces à runs mixtes)
 soffice --headless --convert-to pdf <fichier>.pptx
 pdftoppm -jpeg -r 80 <fichier>.pdf page   # planches de contrôle (PIL pour la grille), à regarder page par page
@@ -16,7 +16,7 @@ pdftoppm -jpeg -r 80 <fichier>.pdf page   # planches de contrôle (PIL pour la g
 Variable `GRAPHIQUES=<dossier>` pour pointer ailleurs que `../../../3-chichi/B-prod-claude/crea/graphiques/`.
 
 ## Séries lues (D2 — chiffre sourcé)
-`page_public.json` (page × public, L-BDD-261022-19), `usure_4sem.json` (ROAS brut par semaine, écarts S6–9 vs S1–5), `usure.json` (hook rate indexé, cohortes acquisition). Les autres chiffres sont écrits en dur dans `build.js` depuis les séries du 21–22/10 (`panier_vs_hook`, `qui_recrute`, `texte_segment`, `texte`, `concentration_bandes`, `promo_ncac`, `produits_ca`, `multi_vs_mono`, scoring) : **à rebrancher sur les JSON** pour la version « chiffres à jour ».
+`page_public.json` (3 pages × 2 publics, landing 3 classes, L-BDD-261022-22), `usure_4sem.json` (ROAS, hook, taux d'achat, CPM par semaine, même base 203 créas), `texte_segment.json` (unifié), `concentration_bandes.json` (bandes 1-5 · 6-10 · 11-20 · 21+). Table de conformité : `chiffres_deck_v4.7.md` (BDD-CREA-CHICHI). Les autres chiffres sont écrits en dur dans `build.js` depuis les séries du 21–22/10 (`panier_vs_hook`, `qui_recrute`, `texte_segment`, `texte`, `concentration_bandes`, `promo_ncac`, `produits_ca`, `multi_vs_mono`, scoring) : **à rebrancher sur les JSON** pour la version « chiffres à jour ».
 
 ## Gabarit (règles de forme d'Alexandre, 22/10)
 - Titre = fait + chiffre. Graphique à gauche (jamais pleine hauteur), bloc vertical à droite : **« Ce qu'on apprend »** (chiffre héros + son explication juste dessous ; insights, apprentissages, une interrogation) / **« Ce qu'on fait »** (plus gros, en puces, sous-puces pour les questions).
@@ -30,5 +30,5 @@ Variable `GRAPHIQUES=<dossier>` pour pointer ailleurs que `../../../3-chichi/B-p
 1. ROAS de la bande « au-delà des 20 créas » : déduit des parts (8 % du CA pour 16 % de la dépense) — à calculer directement.
 2. Hook rate par semaine sur la même base que `usure_4sem.json` (203 créas) — aujourd'hui lu sur `usure.json` (cohortes acquisition, plus petit).
 3. Texte avec vs sans (nouvelles audiences) : taux de clic, CPM, panier moyen — après réexport Meta (clics sortants vides à la source).
-4. Page produit : `page_public.json` donne 0 € hors OP sur H3/H12 — **en vérification d'urgence** (regex landing ; cf. message du cerveau 22/10 14h25). Le deck affiche « chiffres en cours de vérification ».
+4. Page produit : réglé le 22/10 14h (landing 3 classes, `verification_landing.md`) — n = 2 créas en acquisition, présenté comme une amorce.
 5. Les séries `texte.json` et `texte_segment.json` ne partagent pas le même périmètre « sans » (dépense 7 812 vs 14 363) : à unifier.

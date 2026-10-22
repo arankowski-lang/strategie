@@ -1,16 +1,16 @@
-// Deck client Chichi — v4.6.1 (retours 22/10 13h03) : séries BDD page_public + usure_4sem, KPIs complémentaires (max 2), « Ce qu'on fait » en avant, fusions 13+14 et 17+18, sommaire prochaines études & annexes
+// Deck client Chichi — v4.7 (retours 22/10 13h03) : séries BDD page_public + usure_4sem, KPIs complémentaires (max 2), « Ce qu'on fait » en avant, fusions 13+14 et 17+18, sommaire prochaines études & annexes
 const pptxgen = require("pptxgenjs");
 const { applyTheme } = require("./apply_theme.js");
 const fs = require("fs"), path = require("path");
 const LIGHT = process.env.LIGHT === "1"; // version épurée : mêmes données, une page par étude = titre + un graphique + « ce qu'on fait »
 
-const THEME = { name: "Chichi Crea v4.6.1", headFontFace: "Cambria", bodyFontFace: "Calibri",
+const THEME = { name: "Chichi Crea v4.7", headFontFace: "Cambria", bodyFontFace: "Calibri",
   colors: { dk1: "1E1B18", lt1: "F7F3EE", dk2: "6E655B", lt2: "E9E2D8", accent1: "9B1E2E", accent2: "5B8A4A", accent3: "E09A4B", accent4: "7FA7C8", accent5: "C9BFB2", accent6: "3E3A36", hlink: "9B1E2E", folHlink: "6E655B" } };
 const H = THEME.colors, TINT_L = "ECE5DA", TINT_R = "E6EEE2";
 const pres = new pptxgen();
 pres.layout = "LAYOUT_WIDE";
 pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFace };
-pres.author = "DataCAt"; pres.title = "Chichi Castelnango — Créa Meta, v4.6.1";
+pres.author = "DataCAt"; pres.title = "Chichi Castelnango — Créa Meta, v4.7";
 const C = pres.SchemeColor;
 pres.defineSlideMaster({ title: "CONTENT", background: { color: H.lt1 }, objects: [], slideNumber: { x: 12.4, y: 7.05, w: 0.6, h: 0.3, fontSize: 9, color: H.dk2, align: "right" } });
 pres.defineSlideMaster({ title: "DARK", background: { color: H.dk1 }, objects: [] });
@@ -19,14 +19,16 @@ pres.defineSlideMaster({ title: "DARK", background: { color: H.dk1 }, objects: [
 // séries JSON : variable GRAPHIQUES, sinon le chemin depuis 3-chichi-propositions/deck-crea/pptx/
 const G = (process.env.GRAPHIQUES || path.join(__dirname, "..", "..", "..", "3-chichi", "B-prod-claude", "crea", "graphiques")) + path.sep;
 const loadJSON = n => JSON.parse(fs.readFileSync(G + n, "utf8"));
-const PAGE = loadJSON("page_public.json"), US4 = loadJSON("usure_4sem.json"), USW = loadJSON("usure.json");
+const PAGE = loadJSON("page_public.json"), US4 = loadJSON("usure_4sem.json"), TXT = loadJSON("texte_segment.json"), CB = loadJSON("concentration_bandes.json");
 const wk = ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"];
-const rawN = wk.map((_, i) => US4.cohortes["nouveautés"].roas_brut_par_semaine[String(i + 1)]), rawP = wk.map((_, i) => US4.cohortes.permanents.roas_brut_par_semaine[String(i + 1)]);
+const rawN = wk.map((_, i) => US4.cohortes["nouveautés"].brut_par_semaine[String(i + 1)].roas), rawP = wk.map((_, i) => US4.cohortes.permanents.brut_par_semaine[String(i + 1)].roas);
 const idx = a => a.map(v => Math.round(v / a[0] * 100));
-const hookN = USW.cohortes.nouveautes.slice(0, 9).map(r => r.hook_idx), hookP = USW.cohortes.permanents.slice(0, 9).map(r => r.hook_idx);
+const hookN = wk.map((_, i) => US4.cohortes["nouveautés"].indices_par_semaine[String(i + 1)].hook), hookP = wk.map((_, i) => US4.cohortes.permanents.indices_par_semaine[String(i + 1)].hook);
+const TA = TXT.H3.acquisition, vuesParEuro = v => v.roas / (v.panier * v.t_ach); // vues de page par euro = ROAS ÷ (panier × taux d'achat)
+const bandes = CB.H3;
 const mN = US4.cohortes["nouveautés"].metriques, mP = US4.cohortes.permanents.metriques;
 const pct = v => (v > 0 ? "+" : "−") + Math.round(Math.abs(v) * 100) + " %";
-const col = { acq: PAGE.pages.collection.acquisition.H3, rec: PAGE.pages.collection.reciblage.H3 };
+const col = { acq: PAGE.pages.collection.acquisition.H3, rec: PAGE.pages.collection.reciblage.H3 }, prd = { acq: PAGE.pages.produit.acquisition.H3, rec: PAGE.pages.produit.reciblage.H3 };
 const fr = (v, d) => v.toFixed(d).replace(".", ",");
 const ratioCoutAtc = fr(col.acq.cout_atc / col.rec.cout_atc, 1), ratioRoas = fr(col.rec.roas / col.acq.roas, 1);
 
@@ -123,7 +125,7 @@ pres.addSection({ title: "Les études" });
     hero: [pct(mN.roas.ecart_rel) + " / " + pct(mP.roas.ecart_rel), "de ROAS sur les semaines 6 à 9 vs les 5 premières — nouveautés / permanents"],
     lecture: [["Le hook rate ne s'use pas (" + pct(mN.hook.ecart_rel) + " / " + pct(mP.hook.ecart_rel) + ") : ", { t: "c'est l'après-clic qui s'use" }, " — taux d'achat " + pct(mN.t_ach.ecart_rel) + " / " + pct(mP.t_ach.ecart_rel) + "."], ["Les permanents gardent mieux leur taux d'achat, mais leur CPM monte plus (" + pct(mP.cpm.ecart_rel) + ") : une créa fatiguée coûte plus cher à diffuser."], [{ t: "Interrogation", i: true, c: C.text2 }, " : l'algorithme pousse-t-il moins une créa qui vieillit, ou est-ce son audience qui sature ?"]],
     action: [[{ t: "Une créa qui ne marche pas le premier mois, on la coupe." }], ["On étale les lancements : ", { t: "pas plus de 6 à 10 pubs en plus à la fois" }, ", réparties dans le temps, et on force leur diffusion."], ["On sépare les ensembles ", { t: "par catégorie d'assets" }, " pour piloter les budgets."]],
-    legend: "Indices base S1 = 100 · ROAS : 203 créas, 18 mois hors OP (132 nouveautés, 71 permanents) · hook rate : cohortes acquisition", badge: "cohortes 18 mois · hors OP" });
+    legend: "Indices base S1 = 100 · 203 créas, 18 mois hors OP (132 nouveautés, 71 permanents) · même base pour le ROAS, le hook rate, le taux d'achat et le CPM", badge: "cohortes 18 mois · hors OP" });
   if (LIGHT) { section(s, 0.5, 1.78, 7.0, "ROAS indexé par semaine depuis le lancement"); line(s, 0.5, 1.95, 7.0, 4.6, wk, [{ name: "nouveautés", values: idx(rawN) }, { name: "permanents", values: idx(rawP) }], [H.accent2, H.accent4]); }
   else {
   section(s, 0.5, 1.78, 5.7, "ROAS indexé par semaine depuis le lancement"); line(s, 0.5, 1.95, 5.7, 1.75, wk, [{ name: "nouveautés", values: idx(rawN) }, { name: "permanents", values: idx(rawP) }], [H.accent2, H.accent4]);
@@ -136,9 +138,9 @@ if (!LIGHT) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Les études" });
   const avg = a => a.reduce((p, c) => p + c, 0) / a.length;
   frame(s, { kicker: "Étude 1 · usure, comment on juge", tag: "insight",
-    title: ["Les permanents démarrent plus haut (", { t: "4,2 vs 3,6" }, ") et finissent plus bas (", { t: "3,0 vs 3,3" }, ") : on juge une créa en absolu, jamais sur son pic."],
+    title: ["Permanents et nouveautés démarrent au même niveau (", { t: "4,2 vs 4,1" }, ") ; les permanents finissent plus bas (", { t: "3,0 vs 3,3" }, ") : on juge en absolu, jamais sur le pic."],
     hero: ["14 jours", "premier verdict, par rapport au compte — jamais par rapport au pic de la créa"],
-    lecture: [["Une créa à 75 % de son pic peut rester au-dessus de la moyenne du compte : ", { t: "couper « au pic » coupe des créas rentables" }, "."], ["L'avantage des permanents, c'est le départ : ils ouvrent plus haut, puis s'érodent plus vite que les nouveautés."], [{ t: "Interrogation", i: true, c: C.text2 }, " : les créas qui passent 6 semaines sont-elles les mêmes concepts que les universelles (section 2) ?"]],
+    lecture: [["Une créa à 75 % de son pic peut rester au-dessus de la moyenne du compte : ", { t: "couper « au pic » coupe des créas rentables" }, "."], ["Les permanents n'ont pas d'avantage au départ (4,2 vs 4,1 sur les 5 premières semaines) et s'érodent plus vite que les nouveautés."], [{ t: "Interrogation", i: true, c: C.text2 }, " : les créas qui passent 6 semaines sont-elles les mêmes concepts que les universelles (section 2) ?"]],
     action: [[{ t: "Pas de plateau le premier mois : on coupe." }], ["Au-dessus de la moyenne du compte : ", { t: "on garde, au-delà de 6 semaines" }, "."], ["Le budget va au banc frais, pas à la créa qu'on pousse."]],
     legend: "ROAS brut par semaine depuis le lancement · 18 mois hors OP · S1–5 et S6–9 = moyennes des semaines", badge: "cohortes 18 mois · hors OP" });
   section(s, 0.5, 1.78, 5.7, "ROAS brut par semaine — nouveautés vs permanents"); line(s, 0.5, 1.95, 5.7, 4.4, wk, [{ name: "nouveautés", values: rawN }, { name: "permanents", values: rawP }], [H.accent2, H.accent4]);
@@ -149,18 +151,18 @@ if (!LIGHT) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Les études" });
   frame(s, { kicker: "Étude 5 · page d'arrivée", tag: "principale",
     title: ["La même page fait ROAS " + fr(col.rec.roas, 1) + " en reciblage et " + fr(col.acq.roas, 1) + " en acquisition (", { t: "×" + ratioRoas }, ") : c'est le public qui change, pas la page."],
-    hero: ["×" + ratioRoas, "de rendement, même page collection, mêmes créas — reciblage vs acquisition"],
-    lecture: [["Une cliente qui connaît la marque arrive sur la collection et achète ; une inconnue arrive sur la même page et repart : ", { t: "ce qui se joue, c'est avant le clic" }, "."], ["Le panier moyen est identique sur les deux publics : la page ne vend pas plus cher, elle vend plus souvent."], [{ t: "Interrogation", i: true, c: C.text2 }, " : une page produit ferait-elle mieux que la collection en acquisition ? Chiffres en cours de vérification."]],
-    action: [[{ t: "Page produit par défaut" }, " sur les nouvelles créas."], ["Test en reciblage : ", { t: "collection vs non-collection" }, "."], ["En reciblage aussi : ", { t: "des pages collection ciblées pour rediriger vers les produits qu'on veut écouler" }, "."], ["On segmente les créas par public avant de retoucher les pages."]],
-    legend: "Taux d'ajout = ajouts ÷ vues de page · taux d'achat = achats ÷ vues de page · coût par ajout en relatif, base reciblage · pages non taguées exclues", badge: "H3 · 15/07 → 14/10 · hors OP" });
+    hero: ["×" + ratioRoas, "de rendement, même page collection — reciblage vs acquisition"],
+    lecture: [["Une cliente qui connaît la marque arrive sur la collection et achète ; une inconnue arrive sur la même page et repart : ", { t: "ce qui se joue, c'est avant le clic" }, "."], ["Le panier moyen est le même sur les deux publics : la page ne vend pas plus cher, elle vend plus souvent."], [{ t: "Interrogation", i: true, c: C.text2 }, " : la page produit fait " + fr(prd.acq.roas, 1) + " en acquisition contre " + fr(col.acq.roas, 1) + " pour la collection — sur " + prd.acq.ncrea + " créas seulement : une amorce, pas une preuve."]],
+    action: [[{ t: "Page produit par défaut" }, " sur les nouvelles créas : c'est le premier test, pas une certitude."], ["Test en reciblage : ", { t: "collection vs non-collection" }, "."], ["En reciblage aussi : ", { t: "des pages collection ciblées pour rediriger vers les produits qu'on veut écouler" }, "."], ["On segmente les créas par public avant de retoucher les pages."]],
+    legend: "Taux d'ajout = ajouts ÷ vues de page · taux d'achat = achats ÷ vues de page · coût par ajout en relatif, base reciblage collection · page promo (archives, printemps 2025) lue à part · pages non taguées exclues", badge: "H3 · 15/07 → 14/10 · hors OP" });
   const cw = LIGHT ? 3.4 : 2.75, ch = LIGHT ? 2.9 : 1.65, x2 = LIGHT ? 4.1 : 3.45, wb = LIGHT ? 7.0 : 5.7, yb = LIGHT ? 5.0 : 3.65;
   section(s, 0.5, 1.78, cw, "Page collection · ROAS"); hbar(s, 0.5, 1.95, cw, ch, ["reciblage", "acquisition"], [col.rec.roas, col.acq.roas], [H.accent2, H.accent4], "0.0");
   section(s, x2, 1.78, cw, "Page collection · ajout au panier"); hbar(s, x2, 1.95, cw, ch, ["reciblage", "acquisition"], [col.rec.t_atc * 100, col.acq.t_atc * 100], [H.accent3, H.accent3], "0.0\"%\"");
-  section(s, 0.5, yb, wb, "Page produit · reciblage vs acquisition");
-  s.addShape(pres.shapes.RECTANGLE, { x: 0.5, y: yb + 0.17, w: wb, h: 1.45, fill: { color: "FFFFFF" }, line: { color: H.accent5, width: 1, dashType: "dash" } });
-  s.addText("Page produit · reciblage vs acquisition — chiffres en cours de vérification (lecture des pages dans les noms d'annonces) ; complétés dans la version chiffres à jour.", { x: 0.7, y: yb + 0.17, w: wb - 0.4, h: 1.45, fontSize: 10.5, color: C.text2, align: "center", valign: "middle", margin: 0, isTextBox: true });
-  miniKpis(s, [["mêmes créas", String(col.acq.ncrea), "diffusées sur les deux publics : seul le public change", C.text1], ["panier moyen", "≈ égal", "+" + Math.round((col.rec.panier / col.acq.panier - 1) * 100) + " % en reciblage : la page vend plus souvent, pas plus cher", C.text1]], 1.95, 3.32);
-  table(s, 0.5, 5.42, 7.0, [["public · page collection", "ajout panier", "coût / ajout", "achat", "ROAS"], ["reciblage", fr(col.rec.t_atc * 100, 1) + " %", "×1", { t: fr(col.rec.t_ach * 100, 2) + " %", o: good }, { t: fr(col.rec.roas, 1), o: good }], ["acquisition", fr(col.acq.t_atc * 100, 1) + " %", { t: "×" + ratioCoutAtc, o: bad }, { t: fr(col.acq.t_ach * 100, 2) + " %", o: bad }, { t: fr(col.acq.roas, 1), o: bad }]], [2.4, 1.2, 1.3, 1.0, 1.1], { rowH: 0.3 });
+  section(s, 0.5, yb, cw, "Page produit · ROAS (" + prd.acq.ncrea + " créas : amorce)"); hbar(s, 0.5, yb + 0.17, cw, 1.45, ["reciblage", "acquisition"], [prd.rec.roas, prd.acq.roas], [H.accent2, H.accent4], "0.0");
+  section(s, x2, yb, cw, "Page produit · ajout au panier"); hbar(s, x2, yb + 0.17, cw, 1.45, ["reciblage", "acquisition"], [prd.rec.t_atc * 100, prd.acq.t_atc * 100], [H.accent3, H.accent3], "0.0\"%\"");
+  miniKpis(s, [["page produit · acquisition", fr(prd.acq.roas, 1), "de ROAS contre " + fr(col.acq.roas, 1) + " en collection — " + prd.acq.ncrea + " créas, amorce", C.accent2], ["panier moyen", "≈ égal", Math.round(Math.abs(col.rec.panier / col.acq.panier - 1) * 100) + " % d'écart entre les deux publics : la page vend plus souvent, pas plus cher", C.text1]], 1.95, 3.32);
+  const rc = v => "×" + fr(v.cout_atc / col.rec.cout_atc, 1);
+  table(s, 0.5, 5.42, 7.0, [["page · public", "créas", "ajout panier", "coût / ajout", "achat", "ROAS"], ["collection · reciblage", String(col.rec.ncrea), fr(col.rec.t_atc * 100, 1) + " %", "×1", { t: fr(col.rec.t_ach * 100, 2) + " %", o: good }, { t: fr(col.rec.roas, 1), o: good }], ["collection · acquisition", String(col.acq.ncrea), fr(col.acq.t_atc * 100, 1) + " %", { t: rc(col.acq), o: bad }, { t: fr(col.acq.t_ach * 100, 2) + " %", o: bad }, { t: fr(col.acq.roas, 1), o: bad }], ["produit · reciblage", String(prd.rec.ncrea), fr(prd.rec.t_atc * 100, 1) + " %", rc(prd.rec), fr(prd.rec.t_ach * 100, 2) + " %", fr(prd.rec.roas, 1)], ["produit · acquisition", String(prd.acq.ncrea), fr(prd.acq.t_atc * 100, 1) + " %", rc(prd.acq), fr(prd.acq.t_ach * 100, 2) + " %", { t: fr(prd.acq.roas, 1), o: good }]], [2.3, 0.7, 1.1, 1.1, 0.9, 0.9], { rowH: 0.26, fontSize: 9.5 });
 }
 // 6 · panier vs hook
 {
@@ -168,7 +170,7 @@ if (!LIGHT) {
   frame(s, { kicker: "Étude · attirer / vendre", tag: "principale",
     title: ["Le hook rate ne prédit pas la vente : la lingerie accroche ×2,7, mais ", { t: "les permanents ajoutent au panier le plus (9,1 %)" }, "."],
     hero: ["×1,7", "d'ajout au panier pour les permanents vs les nouveautés — avec deux fois moins d'accroche"],
-    lecture: [["Hook rate et ajout au panier ne vont pas ensemble : ", { t: "ce qui arrête le pouce n'est pas ce qui fait acheter" }, "."], ["Le multi-produit cumule la pire accroche et le pire panier : trop de choses à regarder, rien à vouloir."], [{ t: "Interrogation", i: true, c: C.text2 }, " : les cinq « attire-sans-vendre » de l'été — promesse trop forte, ou page qui ne tient pas la promesse ?"]],
+    lecture: [["Hook rate et ajout au panier ne vont pas ensemble : ", { t: "ce qui arrête le pouce n'est pas ce qui fait acheter" }, "."], ["Le multi-produit a la pire accroche et un des paniers les plus bas : trop de choses à regarder, rien à vouloir."], [{ t: "Interrogation", i: true, c: C.text2 }, " : les cinq « attire-sans-vendre » de l'été — promesse trop forte, ou page qui ne tient pas la promesse ?"]],
     action: [[{ t: "On juge une créa sur l'ajout au panier" }, ", pas sur le hook."], ["Une accroche forte qui ne vend pas se retravaille après le clic (page, prix, promesse) plutôt que de se couper."]],
     legend: "Accroche forte = hook rate > 29,5 % (médiane des groupes, 12 mois) · taux panier = ajouts ÷ vues de page · tri décroissant par panier", badge: "H3 · 15/07 → 14/10 · acquisition · hors OP" });
   section(s, 0.5, 1.78, 7.0, "Ajout au panier (orange) · hook rate (bleu)");
@@ -194,16 +196,17 @@ if (!LIGHT) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Les études" });
   frame(s, { kicker: "Étude · le texte", tag: "principale",
     title: ["Le texte aide à recruter (", { t: "achat ×2,5" }, ") ; auprès des clientes, sans texte fait mieux — à confirmer."],
-    hero: ["×2,5 d'achat, +11 % de ROAS", "le paradoxe : avec texte, chaque euro amène moins de vues de page, mais elles achètent bien plus"],
-    lecture: [["Le texte convertit mieux celles qui cliquent (achat 0,49 % vs 0,19 % par vue de page) mais ", { t: "fait moins regarder" }, " : hook rate 18,5 % vs 22 %."], ["Chez les clientes, « sans » fait 8,7 contre 5,8 de ROAS — mais la classe « sans » est aux trois quarts non taguée."], [{ t: "Interrogation", i: true, c: C.text2 }, " : le texte coûte-t-il des vues (CPM, taux de clic) ou des clics ? Il manque les deux à la source — réexport Meta."]],
+    hero: ["×2,5 d'achat, +11 % de ROAS", "le paradoxe : avec texte, chaque euro amène 2,5 fois moins de vues de page — mais elles achètent 2,5 fois plus"],
+    lecture: [["Avec texte, " + fr(vuesParEuro(TA.avec), 1) + " vues de page par euro contre " + fr(vuesParEuro(TA.sans), 1) + " sans : ", { t: "le texte filtre avant la page, puis convertit" }, " (ajout au panier 15 % vs 6 %)."], ["Il accroche aussi plus (hook 18,5 % vs 9,7 %) — mais 46 % des créas « sans » ne sont pas taguées : prudence."], [{ t: "Interrogation", i: true, c: C.text2 }, " : entre le hook et la page, qui coûte — le clic ou le CPM ? Les deux manquent à la source (réexport Meta)."]],
     action: [[{ t: "Texte court par défaut en acquisition" }, " (accroche + une ligne), à confirmer dès le réexport."], ["Sans texte sur les top créas en reciblage : ", { t: "le test de la période 2" }, "."]],
-    legend: "#Wording vs reste · taux d'achat = achats ÷ vues de page · hook rate lu sur un périmètre « sans » plus étroit · concept égal : +68 à +109 % de ROAS avec texte", badge: "H3 · 15/07 → 14/10 · par audience · hors OP" });
+    legend: "#Wording vs reste, périmètre unifié · vues de page par euro = ROAS ÷ (panier × taux d'achat) · 46 % des créas « sans » en acquisition ne sont pas taguées", badge: "H3 · 15/07 → 14/10 · par audience · hors OP" });
   section(s, 0.5, 1.78, 5.7, "ROAS avec et sans texte, par audience");
   hbar2(s, 0.5, 1.95, LIGHT ? 7.0 : 5.7, LIGHT ? 2.3 : 1.9, ["nouvelles audiences", "clientes"], [{ name: "avec texte", values: [3.6, 5.76] }, { name: "sans texte (ou inconnu)", values: [3.24, 8.7] }], [H.accent1, H.accent5], "0.0");
   section(s, 0.5, LIGHT ? 4.45 : 3.9, 5.7, "Taux d'achat, nouvelles audiences");
   hbar(s, 0.5, LIGHT ? 4.62 : 4.07, LIGHT ? 7.0 : 5.7, LIGHT ? 1.8 : 1.25, ["avec texte", "sans texte (ou inconnu)"], [0.49, 0.19], [H.accent2, H.accent5], "0.00\"%\"");
   miniKpis(s, [["part non taguée", "46 % · 79 %", "des créas « sans texte » en acquisition · chez les clientes : d'où la réserve", C.text1]], 1.95, 3.37);
-  table(s, 0.5, 5.42, 7.0, [["nouvelles audiences · 3 mois", "avec texte", "sans texte (ou inconnu)", "écart"], ["part de la dépense · créas", "13 % · 30", "87 % · 53", "—"], ["hook rate", "18,5 %", { t: "22,0 %", o: good }, { t: "−16 %", o: bad }], ["taux d'achat (par vue de page)", { t: "0,49 %", o: good }, "0,19 %", { t: "+158 %", o: good }], ["ROAS", { t: "3,6", o: good }, "3,24", { t: "+11 %", o: good }], ["taux de clic · CPM · panier", "réexport Meta", "réexport Meta", "—"]], [2.6, 1.4, 1.8, 1.2], { rowH: 0.24, fontSize: 9 });
+  const rel = (a, b) => (a >= b ? "+" : "−") + Math.round(Math.abs(a / b - 1) * 100) + " %";
+  table(s, 0.5, 5.38, 7.0, [["nouvelles audiences · 3 mois", "avec texte (30)", "sans texte ou inconnu (53)", "écart"], ["hook rate", { t: fr(TA.avec.hook * 100, 1) + " %", o: good }, fr(TA.sans.hook * 100, 1) + " %", { t: rel(TA.avec.hook, TA.sans.hook), o: good }], ["vues de page par euro", fr(vuesParEuro(TA.avec), 1), { t: fr(vuesParEuro(TA.sans), 1), o: good }, { t: rel(vuesParEuro(TA.avec), vuesParEuro(TA.sans)), o: bad }], ["ajout au panier (par vue de page)", { t: fr(TA.avec.t_atc * 100, 1) + " %", o: good }, fr(TA.sans.t_atc * 100, 1) + " %", { t: rel(TA.avec.t_atc, TA.sans.t_atc), o: good }], ["taux d'achat (par vue de page)", { t: fr(TA.avec.t_ach * 100, 2) + " %", o: good }, fr(TA.sans.t_ach * 100, 2) + " %", { t: rel(TA.avec.t_ach, TA.sans.t_ach), o: good }], ["ROAS", { t: fr(TA.avec.roas, 1), o: good }, fr(TA.sans.roas, 2), { t: rel(TA.avec.roas, TA.sans.roas), o: good }], ["taux de clic · CPM", "réexport Meta", "réexport Meta", "—"]], [2.9, 1.3, 1.6, 1.2], { rowH: 0.205, fontSize: 8.5 });
 }
 // 9 · le budget
 {
@@ -213,11 +216,11 @@ if (!LIGHT) {
     hero: ["72 %", "du CA sur 5 créas en 3 mois — 48 % sur 12 mois"],
     lecture: [["La bande 6-10 reçoit 14 % de la dépense pour un ROAS de 2,2 ; la bande 11-20, 8 % pour 4,3 : ", { t: "l'argent n'est pas là où le rendement est" }, "."], ["Pousser une créa fait saturer son audience, pas la créa : −15 % de ROAS par doublement, 68 % décrochent."], [{ t: "Interrogation", i: true, c: C.text2 }, " : la bande 6-10 est-elle sur-poussée, ou ce sont des créas « à retravailler » (section 2) ?"]],
     action: [[{ t: "Plus de bonnes créas, pas plus de budget par créa." }], ["Réallouer de la bande 6-10 vers la bande 11-20 et le banc frais."], ["Scaler la dépense totale vers des créas fraîches, pas vers les mêmes."]],
-    legend: "Bandes de créas classées par CA attribué, acquisition hors OP · au-delà des 20 : ROAS déduit des parts (8 % du CA pour 16 % de la dépense) · test intra-créa sur 25 créas", badge: "H3 · 15/07 → 14/10 · hors OP" });
+    legend: "Bandes de créas classées par CA attribué, acquisition hors OP · au-delà des 20 : 16 % de la dépense pour 8 % du CA · test intra-créa sur 25 créas", badge: "H3 · 15/07 → 14/10 · hors OP" });
   if (!LIGHT) { section(s, 0.5, 1.78, 5.7, "Part de la dépense par bande de créas — 3 mois");
   hbar(s, 0.5, 1.95, 5.7, 1.75, ["top 5", "créas 6 à 10", "créas 11 à 20", "au-delà"], [62, 14, 8, 16], [H.accent1, H.accent5, H.accent5, H.accent5], "0\"%\""); }
   section(s, 0.5, LIGHT ? 1.78 : 3.78, 5.7, "ROAS par bande de créas — 3 mois");
-  hbar(s, 0.5, LIGHT ? 1.95 : 3.95, LIGHT ? 7.0 : 5.7, LIGHT ? 4.6 : 1.9, ["top 5", "créas 6 à 10", "créas 11 à 20", "au-delà (déduit)"], [3.9, 2.2, 4.3, 1.6], [H.accent2, H.accent1, H.accent2, H.accent5], "0.0");
+  hbar(s, 0.5, LIGHT ? 1.95 : 3.95, LIGHT ? 7.0 : 5.7, LIGHT ? 4.6 : 1.9, ["top 5", "créas 6 à 10", "créas 11 à 20", "au-delà des 20"], [bandes.bande_5.roas, bandes.bande_6_10.roas, bandes.bande_11_20.roas, bandes.bande_21_plus.roas], [H.accent2, H.accent1, H.accent2, H.accent1], "0.0");
   miniKpis(s, [["part du CA · top 5", "72 %", "pour 62 % de la dépense · 48 % du CA sur 12 mois", C.accent1], ["créas qui décrochent", "68 %", "quand on double leur budget (17 sur 25)", C.text1]], 1.95, 3.9);
 }
 // ---------- section 2 ----------
@@ -228,7 +231,7 @@ pres.addSection({ title: "Ce qu'on en comprend, ce qu'on en fait" });
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Ce qu'on en comprend, ce qu'on en fait" });
   frame(s, { kicker: "Ce qu'on a appris", tag: "en une page", title: ["Huit faits, ", { t: "huit gestes" }, "."], badge: "H3 · H12 · hors OP" });
   table(s, 0.5, 1.75, 12.33, [["ce qu'on a vu", "ce qu'on en fait"],
-    [{ t: "Nouvelles audiences et clientes sont deux mondes : la même page, le même panier, un résultat ×3.", o: { bold: true } }, "Segmenter les créas par public et juger chaque public à part."],
+    [{ t: "Nouvelles audiences et clientes sont deux mondes : la même page, le même panier, un résultat ×3,5.", o: { bold: true } }, "Segmenter les créas par public et juger chaque public à part."],
     [{ t: "Le bain, les permanents et le mono-produit recrutent mieux ; la lingerie recrute dans sa saison.", o: { bold: true } }, "Produire d'abord bain et permanents mono-produit ; lingerie à l'automne-hiver."],
     [{ t: "Le texte aide à recruter ; auprès des clientes, il semble inutile.", o: { bold: true } }, "Texte court en acquisition ; test sans texte sur les top créas en reciblage."],
     [{ t: "Une poignée de créas fait le chiffre, et elle change souvent.", o: { bold: true } }, "Un banc profond, renouvelé souvent."],
@@ -329,4 +332,4 @@ function annexFrame(s, o) { o.tag = "annexe"; frame(s, o); }
   s.addText("LA MÉTHODO", { x: 0.7, y: 5.18, w: 4, h: 0.22, fontSize: 8.5, bold: true, color: C.text2, charSpacing: 2, margin: 0, isTextBox: true });
   s.addText(bullets([["Les ventes par produit au jour — ", { t: "déjà dans la base" }], ["La liste des produits jamais montrés en pub"], ["Une créa simple par produit, un mois, ", { t: "sans toucher au budget" }]], 4), { x: 0.7, y: 5.42, w: 11.9, h: 0.95, fontSize: 11.5, color: C.text1, margin: 0, isTextBox: true, valign: "top", fit: "shrink" });
 }
-(async () => { const f = "BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6.1" + (LIGHT ? "_epure" : "") + ".pptx"; await pres.writeFile({ fileName: f }); await applyTheme(f, THEME); console.log("written", f); })();
+(async () => { const f = "BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.7" + (LIGHT ? "_epure" : "") + ".pptx"; await pres.writeFile({ fileName: f }); await applyTheme(f, THEME); console.log("written", f); })();
