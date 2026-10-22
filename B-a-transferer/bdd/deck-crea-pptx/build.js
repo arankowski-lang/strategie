@@ -1,16 +1,16 @@
-// Deck client Chichi — v4.6 (retours 22/10 13h03) : séries BDD page_public + usure_4sem, KPIs complémentaires (max 2), « Ce qu'on fait » en avant, fusions 13+14 et 17+18, sommaire prochaines études & annexes
+// Deck client Chichi — v4.6.1 (retours 22/10 13h03) : séries BDD page_public + usure_4sem, KPIs complémentaires (max 2), « Ce qu'on fait » en avant, fusions 13+14 et 17+18, sommaire prochaines études & annexes
 const pptxgen = require("pptxgenjs");
 const { applyTheme } = require("./apply_theme.js");
 const fs = require("fs"), path = require("path");
 const LIGHT = process.env.LIGHT === "1"; // version épurée : mêmes données, une page par étude = titre + un graphique + « ce qu'on fait »
 
-const THEME = { name: "Chichi Crea v4.6", headFontFace: "Cambria", bodyFontFace: "Calibri",
+const THEME = { name: "Chichi Crea v4.6.1", headFontFace: "Cambria", bodyFontFace: "Calibri",
   colors: { dk1: "1E1B18", lt1: "F7F3EE", dk2: "6E655B", lt2: "E9E2D8", accent1: "9B1E2E", accent2: "5B8A4A", accent3: "E09A4B", accent4: "7FA7C8", accent5: "C9BFB2", accent6: "3E3A36", hlink: "9B1E2E", folHlink: "6E655B" } };
 const H = THEME.colors, TINT_L = "ECE5DA", TINT_R = "E6EEE2";
 const pres = new pptxgen();
 pres.layout = "LAYOUT_WIDE";
 pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFace };
-pres.author = "DataCAt"; pres.title = "Chichi Castelnango — Créa Meta, v4.6";
+pres.author = "DataCAt"; pres.title = "Chichi Castelnango — Créa Meta, v4.6.1";
 const C = pres.SchemeColor;
 pres.defineSlideMaster({ title: "CONTENT", background: { color: H.lt1 }, objects: [], slideNumber: { x: 12.4, y: 7.05, w: 0.6, h: 0.3, fontSize: 9, color: H.dk2, align: "right" } });
 pres.defineSlideMaster({ title: "DARK", background: { color: H.dk1 }, objects: [] });
@@ -52,7 +52,7 @@ function frame(s, o) {
 }
 // bloc droit : CE QU'ON APPREND (sable, chiffre héros + explication juste dessous) / CE QU'ON FAIT (vert, plus gros, puces + sous-puces)
 function rightBlock(s, o) {
-  const x = 7.8, w = 5.03, yT = 1.75, hL = LIGHT ? 1.75 : (o.hL || 2.55), yA = yT + hL + 0.08, hA = 6.75 - yA;
+  const x = 7.8, w = 5.03, yT = 1.75, hL = LIGHT ? 2.35 : (o.hL || 2.55), yA = yT + hL + 0.08, hA = 6.75 - yA;
   s.addShape(pres.shapes.RECTANGLE, { x, y: yT, w, h: hL, fill: { color: TINT_L }, line: { color: TINT_L, width: 0 } });
   s.addText("CE QU'ON APPREND", { x: x + 0.22, y: yT + 0.1, w: 3, h: 0.22, fontSize: 8.5, color: C.text2, charSpacing: 2, margin: 0, isTextBox: true });
   let yText = yT + 0.38;
@@ -62,6 +62,7 @@ function rightBlock(s, o) {
     yText = yT + 1.15;
   }
   if (!LIGHT) s.addText(lines(o.lecture, 6), { x: x + 0.22, y: yText, w: w - 0.44, h: yT + hL - yText - 0.08, fontSize: 10.5, color: C.text1, valign: "top", margin: 0, isTextBox: true, fit: "shrink" });
+  else { const small = lines(o.lecture.slice(0, 2), 3).map(r => { r.options.italic = true; r.options.bold = false; r.options.color = C.text2; return r; }); s.addText(small, { x: x + 0.22, y: yT + 1.6, w: w - 0.44, h: 0.68, fontSize: 8.5, color: C.text2, valign: "top", margin: 0, isTextBox: true, fit: "shrink" }); }
   s.addShape(pres.shapes.LINE, { x, y: yA - 0.04, w, h: 0, line: { color: H.accent5, width: 1 } });
   s.addShape(pres.shapes.RECTANGLE, { x, y: yA, w, h: hA, fill: { color: TINT_R }, line: { color: TINT_R, width: 0 } });
   s.addText("CE QU'ON FAIT", { x: x + 0.22, y: yA + 0.1, w: 3, h: 0.22, fontSize: 9, bold: true, color: C.accent2, charSpacing: 2, margin: 0, isTextBox: true });
@@ -149,7 +150,7 @@ if (!LIGHT) {
   frame(s, { kicker: "Étude 5 · page d'arrivée", tag: "principale",
     title: ["La même page fait ROAS " + fr(col.rec.roas, 1) + " en reciblage et " + fr(col.acq.roas, 1) + " en acquisition (", { t: "×" + ratioRoas }, ") : c'est le public qui change, pas la page."],
     hero: ["×" + ratioRoas, "de rendement, même page collection, mêmes créas — reciblage vs acquisition"],
-    lecture: [["Une cliente qui connaît la marque arrive sur la collection et achète ; une inconnue arrive sur la même page et repart : ", { t: "ce qui se joue, c'est avant le clic" }, "."], ["Le panier moyen est identique sur les deux publics : la page ne vend pas plus cher, elle vend plus souvent."], [{ t: "Interrogation", i: true, c: C.text2 }, " : la page produit n'a reçu aucune dépense hors opérations — on ne sait pas encore ce qu'elle vaut en acquisition."]],
+    lecture: [["Une cliente qui connaît la marque arrive sur la collection et achète ; une inconnue arrive sur la même page et repart : ", { t: "ce qui se joue, c'est avant le clic" }, "."], ["Le panier moyen est identique sur les deux publics : la page ne vend pas plus cher, elle vend plus souvent."], [{ t: "Interrogation", i: true, c: C.text2 }, " : une page produit ferait-elle mieux que la collection en acquisition ? Chiffres en cours de vérification."]],
     action: [[{ t: "Page produit par défaut" }, " sur les nouvelles créas."], ["Test en reciblage : ", { t: "collection vs non-collection" }, "."], ["En reciblage aussi : ", { t: "des pages collection ciblées pour rediriger vers les produits qu'on veut écouler" }, "."], ["On segmente les créas par public avant de retoucher les pages."]],
     legend: "Taux d'ajout = ajouts ÷ vues de page · taux d'achat = achats ÷ vues de page · coût par ajout en relatif, base reciblage · pages non taguées exclues", badge: "H3 · 15/07 → 14/10 · hors OP" });
   const cw = LIGHT ? 3.4 : 2.75, ch = LIGHT ? 2.9 : 1.65, x2 = LIGHT ? 4.1 : 3.45, wb = LIGHT ? 7.0 : 5.7, yb = LIGHT ? 5.0 : 3.65;
@@ -157,7 +158,7 @@ if (!LIGHT) {
   section(s, x2, 1.78, cw, "Page collection · ajout au panier"); hbar(s, x2, 1.95, cw, ch, ["reciblage", "acquisition"], [col.rec.t_atc * 100, col.acq.t_atc * 100], [H.accent3, H.accent3], "0.0\"%\"");
   section(s, 0.5, yb, wb, "Page produit · reciblage vs acquisition");
   s.addShape(pres.shapes.RECTANGLE, { x: 0.5, y: yb + 0.17, w: wb, h: 1.45, fill: { color: "FFFFFF" }, line: { color: H.accent5, width: 1, dashType: "dash" } });
-  s.addText("Aucune dépense hors opérations sur une page produit sur la période : volume insuffisant, à mesurer dès les premières créas « page produit ».", { x: 0.7, y: yb + 0.17, w: wb - 0.4, h: 1.45, fontSize: 10.5, color: C.text2, align: "center", valign: "middle", margin: 0, isTextBox: true });
+  s.addText("Page produit · reciblage vs acquisition — chiffres en cours de vérification (lecture des pages dans les noms d'annonces) ; complétés dans la version chiffres à jour.", { x: 0.7, y: yb + 0.17, w: wb - 0.4, h: 1.45, fontSize: 10.5, color: C.text2, align: "center", valign: "middle", margin: 0, isTextBox: true });
   miniKpis(s, [["mêmes créas", String(col.acq.ncrea), "diffusées sur les deux publics : seul le public change", C.text1], ["panier moyen", "≈ égal", "+" + Math.round((col.rec.panier / col.acq.panier - 1) * 100) + " % en reciblage : la page vend plus souvent, pas plus cher", C.text1]], 1.95, 3.32);
   table(s, 0.5, 5.42, 7.0, [["public · page collection", "ajout panier", "coût / ajout", "achat", "ROAS"], ["reciblage", fr(col.rec.t_atc * 100, 1) + " %", "×1", { t: fr(col.rec.t_ach * 100, 2) + " %", o: good }, { t: fr(col.rec.roas, 1), o: good }], ["acquisition", fr(col.acq.t_atc * 100, 1) + " %", { t: "×" + ratioCoutAtc, o: bad }, { t: fr(col.acq.t_ach * 100, 2) + " %", o: bad }, { t: fr(col.acq.roas, 1), o: bad }]], [2.4, 1.2, 1.3, 1.0, 1.1], { rowH: 0.3 });
 }
@@ -287,7 +288,7 @@ pres.addSection({ title: "Ce qu'on en comprend, ce qu'on en fait" });
     s.addText(p.setup.map((it, j) => ({ text: it, options: { bullet: true, breakLine: j < p.setup.length - 1, paraSpaceAfter: 3 } })), { x: x + 0.2, y: 4.85, w: 3.6, h: 1.0, fontSize: 10.5, color: C.text2, margin: 0, isTextBox: true, valign: "top", fit: "shrink" });
   });
   s.addShape(pres.shapes.RECTANGLE, { x: 0.5, y: 6.05, w: 12.33, h: 0.8, fill: { color: TINT_L }, line: { color: TINT_L, width: 0 } });
-  s.addText([{ text: "PROPOSITIONS, À PART   ", options: { fontSize: 8.5, bold: true, color: C.text2, charSpacing: 2 } }, { text: "Incrémentalité produit (annexe 1)  ·  hold rate et taux de clic dès le réexport Meta  ·  usure par catégorie d'asset une fois les ensembles séparés  ·  page produit en acquisition dès qu'il y a du volume", options: { fontSize: 11, color: C.text1 } }], { x: 0.7, y: 6.05, w: 11.9, h: 0.8, valign: "middle", margin: 0, isTextBox: true, fit: "shrink" });
+  s.addText([{ text: "PROPOSITIONS, À PART   ", options: { fontSize: 8.5, bold: true, color: C.text2, charSpacing: 2 } }, { text: "Incrémentalité produit (annexe 1)  ·  hold rate et taux de clic dès le réexport Meta  ·  usure par catégorie d'asset une fois les ensembles séparés  ·  page produit vs collection en acquisition, une fois les pages vérifiées", options: { fontSize: 11, color: C.text1 } }], { x: 0.7, y: 6.05, w: 11.9, h: 0.8, valign: "middle", margin: 0, isTextBox: true, fit: "shrink" });
 }
 // ---------- section 3 ----------
 pres.addSection({ title: "La méthode créa" });
@@ -328,4 +329,4 @@ function annexFrame(s, o) { o.tag = "annexe"; frame(s, o); }
   s.addText("LA MÉTHODO", { x: 0.7, y: 5.18, w: 4, h: 0.22, fontSize: 8.5, bold: true, color: C.text2, charSpacing: 2, margin: 0, isTextBox: true });
   s.addText(bullets([["Les ventes par produit au jour — ", { t: "déjà dans la base" }], ["La liste des produits jamais montrés en pub"], ["Une créa simple par produit, un mois, ", { t: "sans toucher au budget" }]], 4), { x: 0.7, y: 5.42, w: 11.9, h: 0.95, fontSize: 11.5, color: C.text1, margin: 0, isTextBox: true, valign: "top", fit: "shrink" });
 }
-(async () => { const f = "BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6" + (LIGHT ? "_epure" : "") + ".pptx"; await pres.writeFile({ fileName: f }); await applyTheme(f, THEME); console.log("written", f); })();
+(async () => { const f = "BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6.1" + (LIGHT ? "_epure" : "") + ".pptx"; await pres.writeFile({ fileName: f }); await applyTheme(f, THEME); console.log("written", f); })();

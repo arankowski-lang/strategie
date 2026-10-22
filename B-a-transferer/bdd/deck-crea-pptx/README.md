@@ -1,14 +1,14 @@
-# Générateur du deck client Chichi (pptx) — v4.6 du 22/10/2026
+# Générateur du deck client Chichi (pptx) — v4.6.1 du 22/10/2026
 
 **statut : à transférer · déposé par le cerveau le 22/10 14h10 · destination : `BDD Master/3-chichi-propositions/deck-crea/pptx/`**
 
-Le deck client « Ce que les créas nous disent — et ce qu'on en fait » (19 pages ; 18 en version épurée avec `LIGHT=1`) est produit par `build.js` (pptxgenjs) à partir des séries JSON de `3-chichi/B-prod-claude/crea/graphiques/`. Le fichier rendu de référence : `BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6.pptx` et `…_v4.6_epure.pptx` (+ PDF), déposés par Alexandre à la racine de BDD Master.
+Le deck client « Ce que les créas nous disent — et ce qu'on en fait » (19 pages ; 18 en version épurée avec `LIGHT=1`) est produit par `build.js` (pptxgenjs) à partir des séries JSON de `3-chichi/B-prod-claude/crea/graphiques/`. Le fichier rendu de référence : `BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6.1.pptx` et `…_v4.6.1_epure.pptx` (+ PDF), déposés par Alexandre à la racine de BDD Master.
 
 ## Pipeline
 ```
 npm install pptxgenjs            # une fois, dans ce dossier (jszip vient avec)
-node build.js                    # écrit BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6.pptx
-LIGHT=1 node build.js            # version épurée (…_v4.6_epure.pptx) : mêmes données, une page par étude = titre + un graphique + « ce qu'on fait »
+node build.js                    # écrit BDD-261022-CHICHI-CC-E-LIVRABLE-deck_crea_client_v4.6.1.pptx
+LIGHT=1 node build.js            # version épurée (…_v4.6.1_epure.pptx) : mêmes données, une page par étude = titre + un graphique + « ce qu'on fait »
 python3 fix_ppr.py <fichier>.pptx    # retire les <a:pPr> en milieu de paragraphe (quirk pptxgenjs sur les puces à runs mixtes)
 soffice --headless --convert-to pdf <fichier>.pptx
 pdftoppm -jpeg -r 80 <fichier>.pdf page   # planches de contrôle (PIL pour la grille), à regarder page par page
@@ -30,5 +30,5 @@ Variable `GRAPHIQUES=<dossier>` pour pointer ailleurs que `../../../3-chichi/B-p
 1. ROAS de la bande « au-delà des 20 créas » : déduit des parts (8 % du CA pour 16 % de la dépense) — à calculer directement.
 2. Hook rate par semaine sur la même base que `usure_4sem.json` (203 créas) — aujourd'hui lu sur `usure.json` (cohortes acquisition, plus petit).
 3. Texte avec vs sans (nouvelles audiences) : taux de clic, CPM, panier moyen — après réexport Meta (clics sortants vides à la source).
-4. Page produit : aucune dépense hors OP sur H3/H12 — à mesurer dès qu'il y a du volume.
+4. Page produit : `page_public.json` donne 0 € hors OP sur H3/H12 — **en vérification d'urgence** (regex landing ; cf. message du cerveau 22/10 14h25). Le deck affiche « chiffres en cours de vérification ».
 5. Les séries `texte.json` et `texte_segment.json` ne partagent pas le même périmètre « sans » (dépense 7 812 vs 14 363) : à unifier.
