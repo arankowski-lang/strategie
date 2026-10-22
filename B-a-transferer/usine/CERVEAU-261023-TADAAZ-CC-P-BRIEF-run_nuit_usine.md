@@ -1,6 +1,6 @@
 # BRIEF — run de nuit prospect TADAAZ, usine créa (lot `L-USINE-261023-27`)
 
-**statut : actif · rédigé par le cerveau le 23/10 00h25, complété 01h05 (départ 03h30, coquille 6 concepts, pages test et méthodologie) après brainstorm avec Alexandre (18h13 → 00h09) · à déposer à la racine de `0. IENCLI FACTORY` · la session le range dans `C-pilotage/` · départ des écritures : 03h30**
+**statut : actif · rédigé par le cerveau le 23/10 00h25, complété 01h05 (départ 02h00, coquille 6 concepts, pages test et méthodologie) après brainstorm avec Alexandre (18h13 → 00h09) · à déposer à la racine de `0. IENCLI FACTORY` · la session le range dans `C-pilotage/` · départ des écritures : 02h00**
 
 Compagnons déposés à la racine en même temps : `CERVEAU-261023-TADAAZ-CC-P-CONTEXTE-prospect_tadaaz.md` (la fiche prospect), `CERVEAU-261023-TADAAZ-CC-P-CONTEXTE-concepts_prompts.md` (les 11 concepts, les techniques, tous les prompts), `CREA-261022-GLOBAL-CN-P-CONTEXTE-passation_architecte_crea.md` (passation de l'ancien architecte créa), 5 captures de pubs Tadaaz (PNG) et les captures du site « 100 % personnalisable ».
 
@@ -11,7 +11,7 @@ Compagnons déposés à la racine en même temps : `CERVEAU-261023-TADAAZ-CC-P-C
 - **Mode** : MODE AUTONOME, **super autonome** (`D-regles/mode-super-autonome.md`, gabarit = `11-pidf/B-prod-claude/run-autonome-pidf.md`). Prospect : aucune vanne client ; Alexandre relit tout demain matin à la main.
 - **Lot critique** : non (rien ne sort du dépôt ; le deck pitch est fait par le cerveau).
 - **Writer** : CREA-ECRITURE ; verrou `C-pilotage/.ecriture-en-cours` (CREA-ECRITURE · heure · périmètre `12-tadaaz*` + `E-systeme/scripts/` + `C-pilotage/` · L-USINE-261023-27), retiré en fin.
-- **Attente** : avant **03h30** tu lis, tu prépares en mémoire, tu **n'écris rien** dans le dépôt (une copie Drive est en cours). Boucle d'attente : `date` toutes les cinq minutes. À 03h30, phase 0.
+- **Attente** : avant **02h00** tu lis, tu prépares en mémoire, tu **n'écris rien** dans le dépôt (une copie Drive est en cours). Boucle d'attente : `date` toutes les cinq minutes. À 02h00, phase 0.
 - **Continuité** : tu ne t'arrêtes jamais ; passation au devlog à chaque frontière de lot et tu reprends (minuteur en arrière-plan si ta fenêtre se ferme). Aucune limite de temps. Heures lues sur `date`.
 - **Lot suivant** : V2 d'audit demain matin par Alexandre (8 créas par concept) — pas écrit, la session s'arrête proprement après les rendus.
 
@@ -86,7 +86,7 @@ Coûts unitaires mesurés à PIDF : image neuve medium ≈ 0,08 €, retouche av
 D1/U3 étanchéité : rien de Tech, NV Gallery, PIDF dans les prompts, planches, deck · U4 : aucune référence DataCAt écrite · D2/U7 : chiffres = mots exacts du site avec source, sinon pas de chiffre · D3 : rien ne sort du dépôt · D5 : aucune suppression, `Z-a-supprimer/` · D9 : une image ratée est taguée, jamais effacée ; une réparée garde son parent · D11 : captures, passation, brief = entrées d'Alexandre, intouchables · D12 : une session écrit, verrou · U1 : modèles épinglés · U2 : coût annoncé avant chaque étape et réel après, cap 60 € · U6 : intégrité produit éliminatoire (la carte scrappée reconnaissable) · U8 : registre `_registre.csv` avec **N° · concept · gamme · technique · étape (base/optimisée/encore/simple/réparée-n/style/décl/anti-pub/re-marque) · parent · qualité · coût · drapeaux · tags** · U9 : texte dans l'image · U10 : `paths.py` · R38 : polices OFL si police demandée.
 
 ## 8. Hors périmètre
-Deck pitch final (cerveau, pptx) · ad sets réels · 9:16 · NL/BE/DE · lead magnet et guides · `D-regles/` (file « à graver » dans le CR) · scrape des concurrents (OWL) · visuels nus dans le deck · toute écriture avant 03h30.
+Deck pitch final (cerveau, pptx) · ad sets réels · 9:16 · NL/BE/DE · lead magnet et guides · `D-regles/` (file « à graver » dans le CR) · scrape des concurrents (OWL) · visuels nus dans le deck · toute écriture avant 02h00.
 
 ## 9. Points de contrôle VERIF (fin de lot, lecture seule)
 Cap respecté et coût réel par étape = somme du registre · 33 lignes complètes (4 images chacune, ou réparée) · drapeaux renseignés sur 100 % · aucune image hors `12-tadaaz*` · aucun nom d'autre client · chiffres du deck = fiche sourcée · tags 🌐 ✎ ⚡ cohérents avec la technique du registre · fichiers §3 présents.
